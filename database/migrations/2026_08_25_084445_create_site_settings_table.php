@@ -1,0 +1,70 @@
+<?php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+return new class extends Migration {
+    public function up(): void {
+        Schema::create("site_settings", function (Blueprint $table) {
+            $table->id();
+            $table->string("nama_sekolah")->nullable();
+            $table->string("logo")->nullable();
+            $table->string("favicon")->nullable();
+            $table->text("alamat")->nullable();
+            $table->string("email")->nullable();
+            $table->string("telepon", 20)->nullable();
+            $table->string("hero_judul")->nullable();
+            $table->text("hero_subjudul")->nullable();
+            $table->string("hero_link")->default("#");
+            $table->string("hero_link_teks", 100)->default("Info Selengkapnya");
+            $table->boolean("show_hero_text")->default(true);
+            $table->string("facebook")->default("");
+            $table->string("instagram")->default("");
+            $table->string("youtube")->default("");
+            $table->string("twitter")->default("");
+            $table->string("tiktok")->default("");
+            $table->string("whatsapp")->default("");
+            $table->string("telegram")->nullable();
+            $table->text("maps_iframe")->nullable();
+            $table->string("tema_warna", 50)->default("blue");
+            $table->boolean("header_akreditasi_aktif")->default(true);
+            $table->string("header_akreditasi_teks")->default("");
+            $table->string("header_akreditasi_url")->default("");
+            $table->boolean("header_pendaftaran_aktif")->default(true);
+            $table->boolean("header_pendaftaran_newtab")->default(false);
+            $table->string("header_pendaftaran_teks")->default("");
+            $table->string("header_pendaftaran_url")->default("");
+            $table->boolean("show_profil")->default(true);
+            $table->boolean("show_sambutan")->default(true);
+            $table->boolean("show_statistik")->default(true);
+            $table->boolean("show_keunggulan")->default(true);
+            $table->boolean("show_program")->default(true);
+            $table->boolean("show_chart")->default(true);
+            $table->boolean("show_program_utama")->default(true);
+            $table->string("profil_judul")->nullable();
+            $table->text("profil_teks")->nullable();
+            $table->string("profil_link")->nullable();
+            $table->string("program_judul")->nullable();
+            $table->text("program_teks")->nullable();
+            $table->string("program_link")->nullable();
+            $table->string("sambutan_nama")->nullable();
+            $table->text("sambutan_teks")->nullable();
+            $table->string("sambutan_foto")->nullable();
+            $table->string("stat_mahasantri", 50)->default("0");
+            $table->string("stat_dosen", 50)->default("0");
+            $table->string("stat_alumni", 50)->default("0");
+            $table->string("stat_prodi", 50)->default("0");
+            $table->string("chart_judul")->default("Data Siswa Per Tahun");
+            $table->string("chart_label_1", 100)->default("Siswa TKJ");
+            $table->string("chart_label_2", 100)->default("Siswa Akuntansi");
+            $table->boolean("sidebar_show_sosmed")->default(true);
+            $table->boolean("sidebar_show_artikel")->default(true);
+            $table->string("sidebar_custom_judul")->nullable();
+            $table->longText("sidebar_custom_konten")->nullable();
+            $table->boolean("popup_aktif")->default(false);
+            $table->string("popup_gambar")->nullable();
+            $table->string("popup_url")->nullable();
+            $table->timestamps();
+        });
+    }
+    public function down(): void { Schema::dropIfExists("site_settings"); }
+};
