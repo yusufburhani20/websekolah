@@ -1,58 +1,137 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🏫 Web Sekolah SMK Idrisiyyah - Laravel CMS
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistem manajemen konten (CMS) website resmi **SMK Idrisiyyah** yang dibangun menggunakan **Laravel 13** dengan panel admin **Filament v3**.
 
-## About Laravel
+## 🛠️ Tech Stack
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+| Layer | Teknologi |
+|-------|-----------|
+| Framework | Laravel 13.26.1 |
+| PHP | 8.3.33 |
+| Admin Panel | Filament v3 |
+| Database | MySQL |
+| Auth & Roles | Spatie Laravel Permission |
+| Rich Text Editor | TinyMCE 6 |
+| Frontend | Blade + Vanilla CSS |
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## ✨ Fitur Utama
 
-## Learning Laravel
+### 📰 Manajemen Berita / Post
+- Tambah, edit, hapus berita
+- Upload thumbnail & foto slider berita
+- Editor teks kaya (TinyMCE) untuk konten berita
+- Pilih kategori & tag
+- Status publish/draft
+- Tombol "Lihat Post" untuk preview langsung
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 📄 Halaman Statis
+- Kelola halaman statis (Profil, Visi Misi, Kontak, dll.)
+- Editor TinyMCE untuk konten halaman
+- Redirect otomatis ke daftar setelah simpan/batal/hapus
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 🖼️ Media Library
+- Pusat penyimpanan gambar terpusat
+- Upload gambar ke sistem
+- Gambar di Media Library dapat dipakai ulang di berita & halaman statis
+- Tampilan grid/galeri
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### 🗂️ Dokumen Center
+- Upload & kelola dokumen (PDF, DOCX, dll.)
+- Kategorisasi dokumen
+- Link unduhan publik
 
-## Agentic Development
+### 🧭 Menu Navigasi
+- Kelola menu navigasi website
+- Bedakan Menu Utama & Sub Menu secara visual (badge berwarna)
+- Pengaturan mudah: pilih induk menu untuk jadikan sub menu
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### ⚙️ Pengaturan Situs (Bertab)
+Pengaturan lengkap website dalam form tab yang rapi:
+- **Identitas & Kontak**: Nama web, Logo, Favicon, Email, Alamat, Telepon, Maps
+- **Hero/Banner**: Teks utama, subjudul, tombol CTA
+- **Sosial Media**: Facebook, Instagram, YouTube, TikTok, Twitter, WhatsApp, Telegram
+- **Profil & Sambutan**: Teks profil sekolah, foto & sambutan kepala sekolah
+- **Statistik**: Jumlah siswa, guru, alumni, prodi
+- **Grafik Data**: Konfigurasi grafik perkembangan siswa
+- **Header Pengumuman**: Teks akreditasi & pendaftaran di header
+- **Pop-up Beranda**: Gambar promo/pengumuman popup
+- **Sidebar Blog**: Widget sosmed & artikel di sidebar
+
+### 🖼️ Konten Beranda
+- **Hero Slide**: Kelola gambar carousel/slider beranda
+- **Keunggulan (Home Feature)**: Fitur/keunggulan sekolah dengan ikon
+- **Program Keahlian**: Daftar jurusan yang tersedia
+
+### 🔐 Autentikasi & Roles
+- Login admin yang aman
+- Manajemen role & permission (via Spatie)
+- Halaman login kustom
+
+---
+
+## 🚀 Instalasi
 
 ```bash
-composer require laravel/boost --dev
+# Clone repository
+git clone git@github.com:yusufburhani20/websekolah.git
+cd websekolah
 
-php artisan boost:install
+# Install dependencies
+composer install
+
+# Copy & konfigurasi .env
+cp .env.example .env
+php artisan key:generate
+
+# Konfigurasi database di .env lalu jalankan migrasi
+php artisan migrate --seed
+
+# Jalankan server
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+**Akses Admin Panel:** `http://localhost:8000/admin`
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 📁 Struktur Direktori Penting
 
-## Code of Conduct
+```
+app/
+├── Filament/
+│   ├── Pages/
+│   │   ├── Auth/Login.php          # Halaman login kustom
+│   │   └── ManageSiteSettings.php  # Pengaturan situs (tab)
+│   ├── Resources/
+│   │   ├── PostResource.php        # Manajemen berita
+│   │   ├── PageResource.php        # Halaman statis
+│   │   ├── DocumentResource.php    # Dokumen center
+│   │   ├── MediaLibraryResource.php# Media library
+│   │   ├── NavigationMenuResource.php # Menu navigasi
+│   │   ├── HeroSlideResource.php   # Slide beranda
+│   │   ├── HomeFeatureResource.php # Keunggulan beranda
+│   │   └── HomeProgramResource.php # Program keahlian
+│   └── Widgets/                    # Dashboard widgets
+├── Models/
+│   ├── Post.php
+│   ├── Page.php
+│   ├── Document.php
+│   ├── NavigationMenu.php
+│   ├── SiteSetting.php
+│   ├── HeroSlide.php
+│   ├── HomeFeature.php
+│   └── HomeProgram.php
+public/
+└── assets/images/                  # Penyimpanan gambar
+resources/views/
+├── filament/                       # View kustom Filament
+└── layouts/public.blade.php        # Layout website publik
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 📝 Lisensi
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Dikembangkan untuk keperluan internal **SMK Idrisiyyah**.
