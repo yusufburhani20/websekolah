@@ -44,10 +44,7 @@ class AdminPanelProvider extends PanelProvider
                     ->url(fn (): string => url('/'), shouldOpenInNewTab: true)
                     ->icon('heroicon-o-globe-alt')
                     ->sort(99),
-                NavigationItem::make('Deploy ke Production')
-                    ->url('https://github.com/yusufburhani20/websekolah', shouldOpenInNewTab: true)
-                    ->icon('heroicon-o-rocket-launch')
-                    ->sort(100),
+                
             ])
             ->colors([
                 'primary' => Color::Amber,

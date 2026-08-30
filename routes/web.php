@@ -34,18 +34,7 @@ Route::get('/berita', [PostController::class, 'index']);
 Route::get('/berita/{slug}', [PostController::class, 'show']);
 
 
-// View Composer for layout data
-View::composer('*', function ($view) {
-    if (!request()->is('admin*') && !request()->is('livewire*')) {
-        static $settings = null;
-        static $menus = null;
-        if (!$settings) {
-            $settings = \App\Models\SiteSetting::first() ?? new \App\Models\SiteSetting();
-            $menus = \App\Models\NavigationMenu::with('children')->where('status', 'aktif')->where('parent_id', 0)->orderBy('urutan')->get();
-        }
-        $view->with(compact('settings', 'menus'));
-    }
-});
+
 
 use App\Models\Post;
 use App\Models\HomeProgram;
