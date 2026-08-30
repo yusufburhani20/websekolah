@@ -10,9 +10,16 @@
     <div class="absolute inset-0 z-0 opacity-60 transform -rotate-[3deg] scale-125 md:scale-110 pointer-events-none transition-transform duration-1000">
         <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 p-4 absolute -inset-[20%]">
             @php 
-                $bgImages = array_slice($galleries->items(), 0, 18); 
-                if(empty($bgImages)) {
+                $items = $galleries->items();
+                if(empty($items)) {
                     $bgImages = array_fill(0, 18, (object)['foto' => 'default.jpg']);
+                } else {
+                    $bgImages = $items;
+                    // Repeat items until we have at least 18 to fill the grid
+                    while(count($bgImages) < 18) {
+                        $bgImages = array_merge($bgImages, $items);
+                    }
+                    $bgImages = array_slice($bgImages, 0, 18);
                 }
             @endphp
             @foreach($bgImages as $i => $gallery)
