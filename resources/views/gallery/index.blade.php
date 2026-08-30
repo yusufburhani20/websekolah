@@ -7,7 +7,7 @@
 <!-- Page Header (Unsplash/Pinterest Style) -->
 <section class="bg-brand-950 py-24 md:py-32 relative overflow-hidden">
     <!-- Animated Masonry Background -->
-    <div class="absolute inset-0 z-0 opacity-20 transform -rotate-[5deg] scale-125 md:scale-110 pointer-events-none transition-transform duration-1000">
+    <div class="absolute inset-0 z-0 opacity-60 transform -rotate-[3deg] scale-125 md:scale-110 pointer-events-none transition-transform duration-1000">
         <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 p-4 absolute -inset-[20%]">
             @php 
                 $bgImages = array_slice($galleries->items(), 0, 18); 
@@ -23,14 +23,14 @@
                     $mt = $mtClasses[$i % 5];
                 @endphp
                 <div class="rounded-2xl overflow-hidden shadow-2xl {{ $height }} {{ $mt }}">
-                    <img src="{{ asset((str_starts_with($gallery->foto ?? 'default.jpg', 'assets') ? '' : 'assets/images/gallery/') . ($gallery->foto ?? 'default.jpg')) }}" class="w-full h-full object-cover filter grayscale" alt="Bg" onerror="this.onerror=null;this.src='{{ asset('assets/images/default1.jpg') }}';">
+                    <img src="{{ asset((str_starts_with($gallery->foto ?? 'default.jpg', 'assets') ? '' : 'assets/images/gallery/') . ($gallery->foto ?? 'default.jpg')) }}" class="w-full h-full object-cover shadow-lg" alt="Bg" onerror="this.onerror=null;this.src='{{ asset('assets/images/default1.jpg') }}';">
                 </div>
             @endforeach
         </div>
     </div>
     
     <!-- Cinematic Gradient Overlay -->
-    <div class="absolute inset-0 z-0 bg-gradient-to-b from-brand-950/80 via-brand-950/90 to-brand-950"></div>
+    <div class="absolute inset-0 z-0 bg-gradient-to-b from-brand-950/40 via-brand-950/60 to-brand-950"></div>
     
     <!-- Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center justify-center">
