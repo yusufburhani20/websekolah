@@ -33,16 +33,16 @@
             <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 drop-shadow-md leading-tight tracking-tight">
                 {{ $settings->hero_judul ?? 'Selamat Datang di SMK Idrisiyyah' }}
             </h1>
-            <p class="text-lg md:text-2xl text-slate-200 mb-10 max-w-2xl mx-auto font-light">
-                {{ $settings->hero_subjudul ?? 'Mencetak generasi unggul, siap kerja, berkarakter & menguasai teknologi modern' }}
+            <p class="text-xl md:text-2xl leading-relaxed text-amber-400 mb-10 max-w-3xl mx-auto font-bold tracking-wider" style="text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                {!! str_replace(',', ' <span class="mx-2 text-amber-500/50">&bull;</span> ', e($settings->hero_subjudul ?? 'Mencetak generasi unggul, siap kerja, berkarakter & menguasai teknologi modern')) !!}
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 @if(!empty($settings->hero_link_teks) && !empty($settings->hero_link))
-                <a href="{{ $settings->hero_link }}" class="bg-amber-500 hover:bg-amber-400 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:-translate-y-1 shadow-xl shadow-amber-500/30">
+                <a href="{{ $settings->hero_link }}" class="bg-amber-400 hover:bg-amber-500 text-brand-950 px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:-translate-y-1 shadow-lg">
                     {{ $settings->hero_link_teks }}
                 </a>
                 @endif
-                <a href="#program" class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300">
+                <a href="#program" class="bg-brand-800/40 hover:bg-brand-800/60 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300">
                     Jelajahi Program
                 </a>
             </div>
