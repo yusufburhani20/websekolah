@@ -55,6 +55,7 @@ class PageResource extends Resource
                         Forms\Components\Select::make('template')
                             ->options([
                                 'default' => 'Default Template',
+                                'wide' => 'Template Luas (Tanpa Sidebar)',
                             ])
                             ->required()
                             ->default('default'),
@@ -90,7 +91,8 @@ class PageResource extends Resource
                             ->live(),
                         Forms\Components\FileUpload::make('gambar')
                             ->image()
-                            ->imageResizeMode('cover')->imageResizeTargetWidth('1920')->imageResizeTargetHeight('1080')
+                    ->maxSize(2048)
+                            
                             ->directory('assets/images/pages')
                             ->disk('public_path')
                             ->helperText('Gambar utama (opsional) untuk halaman ini.'),

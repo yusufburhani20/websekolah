@@ -6,7 +6,7 @@
 <div class="bg-brand-900 py-16 text-center px-4">
     <div class="max-w-4xl mx-auto">
         @if($jurusan->logo)
-        <img src="{{ asset('assets/images/jurusan/' . $jurusan->logo) }}" alt="Logo {{ $jurusan->singkatan }}" class="w-24 h-24 mx-auto mb-6 bg-white p-2 rounded-2xl shadow-lg" onerror="this.style.display='none';">
+        <img src="{{ asset((str_starts_with($jurusan->logo, 'assets') ? '' : 'assets/images/jurusan/') . $jurusan->logo) }}" alt="Logo {{ $jurusan->singkatan }}" class="w-24 h-24 mx-auto mb-6 bg-white p-2 rounded-2xl shadow-lg" onerror="this.style.display='none';">
         @endif
         <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">{{ $jurusan->nama_jurusan }}</h1>
         <p class="text-brand-200 text-xl font-medium">{{ $jurusan->singkatan }}</p>

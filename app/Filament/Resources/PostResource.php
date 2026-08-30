@@ -97,14 +97,16 @@ class PostResource extends Resource
                         Forms\Components\FileUpload::make('thumbnail')
                             ->label('Foto Utama (Thumbnail)')
                             ->image()
-                            ->imageResizeMode('cover')->imageResizeTargetWidth('1920')->imageResizeTargetHeight('1080')
+                    ->maxSize(2048)
+                            
                             ->directory('assets/images/berita/thumbnail')
                             ->disk('public_path')
                             ->helperText('Hanya bisa mengunggah 1 gambar untuk dijadikan sampul depan berita.'),
                         Forms\Components\FileUpload::make('foto')
                             ->label('Galeri Foto Tambahan (Slider)')
                             ->image()
-                            ->imageResizeMode('cover')->imageResizeTargetWidth('1920')->imageResizeTargetHeight('1080')
+                    ->maxSize(2048)
+                            
                             ->directory('assets/images/berita')
                             ->disk('public_path')
                             ->multiple()

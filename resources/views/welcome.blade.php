@@ -10,7 +10,7 @@
         <div class="swiper-wrapper">
             @forelse($heroSlides as $slide)
             <div class="swiper-slide relative">
-                <img src="{{ asset('assets/images/hero/' . ($slide->gambar ?: 'default1.jpg')) }}" alt="Hero" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='{{ asset('assets/images/default1.jpg') }}';" />
+                <img src="{{ asset((str_starts_with($slide->gambar ?: 'default1.jpg', 'assets') ? '' : 'assets/images/hero/') . ($slide->gambar ?: 'default1.jpg')) }}" alt="Hero" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='{{ asset('assets/images/default1.jpg') }}';" />
                 <!-- Solid Overlay instead of Gradient -->
                 <div class="absolute inset-0 bg-brand-950/70"></div>
             </div>
@@ -121,29 +121,53 @@
             <p class="text-slate-600 max-w-2xl mx-auto text-lg">Kami mempersiapkan tenaga profesional yang siap kerja, mandiri, dan berjiwa wirausaha di berbagai bidang industri modern.</p>
         </div>
         
+        <style>
+            @keyframes float {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-8px); }
+                100% { transform: translateY(0px); }
+            }
+            .animate-float {
+                animation: float 4s ease-in-out infinite;
+            }
+            .glass-card {
+                background: #ffffff;
+                border: 1px solid #e2e8f0;
+            }
+            .glass-card:hover {
+                
+            }
+        </style>
         <div class="{{ $jurusans->count() == 2 ? 'flex flex-col md:flex-row justify-center max-w-5xl mx-auto [&>a]:w-full [&>a]:md:w-1/2' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3' }} gap-8">
             @forelse($jurusans as $jur)
-            <a href="/jurusan/{{ $jur->slug }}" class="group block bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 border border-slate-100 hover:shadow-2xl hover:shadow-slate-200/80 hover:-translate-y-2 transition-all duration-500 relative overflow-hidden">
-                <!-- Dekorasi hover watermark -->
-                <div class="absolute top-0 right-0 w-32 h-32 bg-brand-50 rounded-bl-full -mr-16 -mt-16 transition-transform duration-700 group-hover:scale-150"></div>
+            <a href="{{ str_starts_with($jur->slug, '/') || str_starts_with($jur->slug, 'http') ? $jur->slug : url('/jurusan/' . $jur->slug) }}" class="group block glass-card rounded-3xl p-8 hover:-translate-y-3 transition-all duration-500 relative overflow-hidden">
+                
                 
                 <div class="relative z-10 flex flex-col h-full">
-                    <div class="w-16 h-16 bg-brand-950 text-amber-400 rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-md group-hover:bg-amber-400 group-hover:text-brand-950 transition-colors duration-500">
-                        @if($jur->logo)
-                            <img src="{{ asset('assets/images/jurusan/' . $jur->logo) }}" alt="{{ $jur->singkatan }}" class="w-10 h-10 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-500">
-                        @else
-                            <i class="fa-solid fa-laptop-code"></i>
-                        @endif
+                    <!-- Floating Logo Container -->
+                    <div class="animate-float mb-8 mt-2 relative">
+                        <div class="w-28 h-28 mx-auto bg-white border border-slate-100 text-amber-400 rounded-3xl flex items-center justify-center text-6xl group-hover:border-amber-200 transition-all duration-500 relative z-10 transform group-hover:scale-110 group-hover:rotate-3 shadow-sm hover:shadow-md">
+                            @if($jur->logo)
+                                <img src="{{ asset((str_starts_with($jur->logo, 'assets') ? '' : 'assets/images/jurusan/') . $jur->logo) }}" alt="{{ $jur->singkatan }}" class="w-20 h-20 object-contain transition-all duration-500">
+                            @else
+                                <i class="fa-solid fa-laptop-code"></i>
+                            @endif
+                        </div>
+                        
                     </div>
-                    <h3 class="text-2xl font-extrabold text-brand-950 mb-2">{{ $jur->nama_jurusan }}</h3>
-                    <div class="inline-block bg-brand-50 text-brand-700 text-xs font-bold px-3 py-1 rounded-lg mb-4">{{ $jur->singkatan }}</div>
                     
-                    <p class="text-slate-500 text-sm leading-relaxed mb-8 flex-1 line-clamp-3">
-                        {{ $jur->deskripsi ?: 'Program keahlian yang membekali siswa dengan keterampilan praktis dan teoretis sesuai standar industri.' }}
-                    </p>
+                    <div class="text-center">
+                        <h3 class="text-2xl font-extrabold text-brand-950 mb-3 group-hover:text-amber-500 transition-colors duration-300">{{ $jur->nama_jurusan }}</h3>
+                        <div class="inline-block bg-white/80 backdrop-blur-sm text-brand-700 text-xs font-bold px-4 py-1.5 rounded-full mb-6 border border-brand-100 shadow-sm">{{ $jur->singkatan }}</div>
+                        
+                        <p class="text-slate-600 text-sm leading-relaxed mb-8 flex-1 line-clamp-3">
+                            {{ $jur->deskripsi ?: 'Program keahlian yang membekali siswa dengan keterampilan praktis dan teoretis sesuai standar industri.' }}
+                        </p>
+                    </div>
                     
-                    <div class="mt-auto flex items-center gap-2 text-brand-600 font-bold text-sm group-hover:text-amber-500 transition-colors">
-                        Pelajari Selengkapnya <i class="fa-solid fa-arrow-right-long transition-transform group-hover:translate-x-2"></i>
+                    <div class="mt-auto flex items-center justify-center text-brand-600 font-bold group-hover:text-amber-500 transition-colors bg-white/50 rounded-2xl py-3 group-hover:bg-amber-50">
+                        <span>Eksplorasi Program</span>
+                        <i class="fa-solid fa-arrow-right ml-2 transform group-hover:translate-x-2 transition-transform"></i>
                     </div>
                 </div>
             </a>
@@ -176,7 +200,7 @@
                     <div class="bg-slate-200 rounded-3xl overflow-visible relative z-10 border-4 border-white shadow-xl h-[400px] lg:h-[500px]">
                         @if(!empty($settings->sambutan_foto))
                         <!-- Foto sengaja ditarik ke atas sedikit agar keluar kotak -->
-                        <img src="{{ asset('assets/images/' . $settings->sambutan_foto) }}" alt="Kepala Sekolah" class="w-full h-[110%] object-cover object-top absolute bottom-0 left-0 rounded-b-3xl" onerror="this.onerror=null;this.src='{{ asset('assets/images/default_user.png') }}';">
+                        <img src="{{ asset((str_starts_with($settings->sambutan_foto, 'assets') ? '' : 'assets/images/') . $settings->sambutan_foto) }}" alt="Kepala Sekolah" class="w-full h-[110%] object-cover object-top absolute bottom-0 left-0 rounded-b-3xl" onerror="this.onerror=null;this.src='{{ asset('assets/images/default_user.png') }}';">
                         @else
                         <div class="w-full h-full flex items-center justify-center text-slate-400 rounded-3xl">
                             <i class="fa-solid fa-user-tie text-9xl"></i>
@@ -194,7 +218,7 @@
                     
                     <div class="relative">
                         <i class="fa-solid fa-quote-left text-6xl absolute -top-4 -left-6 text-brand-800 opacity-50 z-0"></i>
-                        <p class="text-slate-300 leading-relaxed text-lg italic relative z-10 mb-8 font-medium">
+                        <p class="text-slate-300 leading-relaxed text-lg italic relative z-10 mb-8 font-medium text-justify">
                             "{{ Str::limit($settings->sambutan_teks ?? 'Selamat datang di website resmi sekolah kami. Kami berkomitmen memberikan pendidikan terbaik.', 400) }}"
                         </p>
                     </div>
@@ -320,7 +344,7 @@
                 @endif
                 
                 @if($mitra->logo)
-                    <img src="{{ asset('assets/images/mitra/' . $mitra->logo) }}" alt="{{ $mitra->nama_perusahaan }}" class="h-12 md:h-16 w-auto object-contain" title="{{ $mitra->nama_perusahaan }}">
+                    <img src="{{ asset((str_starts_with($mitra->logo, 'assets') ? '' : 'assets/images/mitra/') . $mitra->logo) }}" alt="{{ $mitra->nama_perusahaan }}" class="h-12 md:h-16 w-auto object-contain" title="{{ $mitra->nama_perusahaan }}">
                 @else
                     <div class="px-6 py-3 bg-white shadow-sm border border-slate-100 rounded-xl font-bold text-slate-400">{{ $mitra->nama_perusahaan }}</div>
                 @endif

@@ -6,14 +6,14 @@
     <meta name="description" content="@yield('meta_description', 'Website Resmi ' . ($settings->nama_sekolah ?? 'SMK Idrisiyyah') . ' - Mencetak generasi unggul, berkarakter dan menguasai teknologi.')">
     <meta property="og:title" content="@yield('title', $settings->nama_sekolah ?? 'SMK Idrisiyyah')">
     <meta property="og:description" content="@yield('meta_description', 'Website Resmi ' . ($settings->nama_sekolah ?? 'SMK Idrisiyyah'))">
-    <meta property="og:image" content="@yield('meta_image', asset('assets/images/' . ($settings->logo ?? 'logo.png')))">
+    <meta property="og:image" content="@yield('meta_image', asset((str_starts_with($settings->logo ?? '', 'assets') ? '' : 'assets/images/') . ($settings->logo ?? 'logo.png')))">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta name="twitter:card" content="summary_large_image">
     <title>@yield('title', $settings->nama_sekolah ?? 'SMK Idrisiyyah')</title>
     @if(!empty($settings->favicon))
-    <link rel="icon" type="image/png" href="{{ asset('assets/images/' . $settings->favicon) }}">
-    <link rel="shortcut icon" href="{{ asset('assets/images/' . $settings->favicon) }}">
-    <link rel="apple-touch-icon" href="{{ asset('assets/images/' . $settings->favicon) }}">
+    <link rel="icon" type="image/png" href="{{ asset((str_starts_with($settings->favicon ?? '', 'assets') ? '' : 'assets/images/') . ($settings->favicon ?? 'logo.png')) }}">
+    <link rel="shortcut icon" href="{{ asset((str_starts_with($settings->favicon ?? '', 'assets') ? '' : 'assets/images/') . ($settings->favicon ?? 'logo.png')) }}">
+    <link rel="apple-touch-icon" href="{{ asset((str_starts_with($settings->favicon ?? '', 'assets') ? '' : 'assets/images/') . ($settings->favicon ?? 'logo.png')) }}">
     @else
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     @endif
@@ -57,7 +57,71 @@
         }
     </style>
     @yield('head')
+
+    <!-- Org Chart Styles -->
+    <style>
+.org-chart-wrapper {
+  --navy: #1E3A6E;
+  --navy-soft: #EAF0FA;
+  --amber: #F0A202;
+  --amber-soft: #FDF3DC;
+  --teal: #2E8B74;
+  --teal-soft: #E7F5F1;
+  --ink: #1F2430;
+  --muted: #64748B;
+  --line: #C7D2E0;
+  --card-bg: #FFFFFF;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 3rem;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink);
+  box-sizing: border-box;
+}
+.org-chart-wrapper * { box-sizing: border-box; }
+.org-header { text-align: center; margin-bottom: 2.75rem; }
+.org-eyebrow { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.4rem; }
+.org-title { font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 800; letter-spacing: -0.01em; margin: 0; color: var(--navy); }
+.org-top { display: flex; justify-content: center; margin-bottom: 0; }
+.org-card { display: block !important; text-decoration: none !important; color: inherit !important; background: var(--card-bg); border: 1px solid var(--line) !important; border-radius: 12px; padding: 0.9rem 1.1rem; box-shadow: 0 1px 2px rgba(20, 30, 60, 0.05); transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; position: relative; }
+.org-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(20, 40, 80, 0.12); border-color: var(--navy) !important; }
+.org-card:focus-visible { outline: 2.5px solid var(--amber); outline-offset: 2px; }
+.org-role { font-size: 0.7rem !important; font-weight: 700 !important; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted) !important; margin: 0 0 0.15rem !important; }
+.org-name { font-size: 0.92rem !important; font-weight: 600 !important; margin: 0 !important; color: var(--ink) !important; }
+.org-card .org-link-icon { position: absolute; top: 0.7rem; right: 0.7rem; font-size: 0.7rem; color: var(--muted); opacity: 0; transition: opacity 0.15s ease; }
+.org-card:hover .org-link-icon { opacity: 1; }
+.org-card--principal { background: var(--navy); border-color: var(--navy) !important; text-align: center; min-width: 280px; padding: 1.1rem 1.5rem; }
+.org-card--principal .org-role { color: #B9CBEA !important; }
+.org-card--principal .org-name { color: #fff !important; font-size: 1.05rem !important; }
+.org-card--principal:hover { border-color: var(--amber) !important; }
+.org-trunk { width: 2px; height: 2rem; background: var(--amber); margin: 0 auto; }
+.org-branch-bar { height: 2px; background: var(--amber); margin: 0 5%; }
+.org-drops { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+.org-drop { width: 2px; height: 1.75rem; background: var(--amber); margin: 0 auto; }
+.org-columns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; align-items: start; }
+.org-column { display: flex; flex-direction: column; align-items: stretch; }
+.org-column-head { text-align: center; margin-bottom: 0.9rem; }
+.org-column--kurikulum .org-card--head { border-top: 3px solid var(--navy) !important; }
+.org-column--kesiswaan .org-card--head { border-top: 3px solid var(--teal) !important; }
+.org-column--admin .org-card--head { border-top: 3px solid var(--amber) !important; background: var(--amber-soft); }
+.org-stem { width: 2px; flex: 0 0 auto; height: 1.25rem; background: var(--line); margin: 0 auto; }
+.org-sublist { display: flex; flex-direction: column; gap: 0.6rem; position: relative; padding-left: 0; }
+.org-column--kurikulum .org-card:hover { border-color: var(--navy) !important; }
+.org-column--kesiswaan .org-card:hover { border-color: var(--teal) !important; }
+.org-column--admin .org-card { background: #fff; }
+.org-column--admin .org-card:hover { border-color: var(--amber) !important; }
+.org-subgroup { margin-top: 0.6rem; padding-top: 0.7rem; border-top: 1px dashed var(--line); display: flex; flex-direction: column; gap: 0.6rem; }
+.org-subgroup-label { font-size: 0.68rem !important; font-weight: 700 !important; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted) !important; text-align: center; margin-bottom: 0.1rem !important; }
+.org-note { text-align: center; margin-top: 2.5rem !important; font-size: 0.78rem !important; color: var(--muted) !important; }
+@media (max-width: 760px) {
+  .org-branch-bar, .org-drops { display: none; }
+  .org-columns { grid-template-columns: 1fr; gap: 2rem; }
+  .org-column::before { content: ""; display: block; width: 2px; height: 1.5rem; background: var(--amber); margin: 0 auto 0.5rem; }
+}
+@media (prefers-reduced-motion: reduce) { .org-card { transition: none; } }
+    </style>
 </head>
+
 <body class="font-sans antialiased text-gray-800 bg-slate-50 flex flex-col min-h-screen">
 
     <!-- Top Bar (Header Pengumuman) -->
@@ -151,7 +215,7 @@
                 <div class="flex items-center">
                     <a href="/" class="flex items-center gap-3 group">
                         @if(!empty($settings->logo))
-                        <img src="{{ asset('assets/images/' . $settings->logo) }}" alt="Logo" class="h-12 w-auto transform transition duration-500 group-hover:scale-105" onerror="this.onerror=null;this.style.display='none'">
+                        <img src="{{ asset((str_starts_with($settings->logo ?? '', 'assets') ? '' : 'assets/images/') . ($settings->logo ?? 'logo.png')) }}" alt="Logo" class="h-12 w-auto transform transition duration-500 group-hover:scale-105" onerror="this.onerror=null;this.style.display='none'">
                         @else
                         <div class="h-12 w-12 bg-brand-600 text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-lg">
                             {{ substr($settings->nama_sekolah ?? 'S', 0, 1) }}
@@ -251,7 +315,7 @@
                 <div class="lg:col-span-2">
                     <div class="flex items-center gap-3 mb-4">
                         @if(!empty($settings->logo))
-                        <img src="{{ asset('assets/images/' . $settings->logo) }}" alt="Logo" class="h-12 w-auto brightness-0 invert opacity-80">
+                        <img src="{{ asset((str_starts_with($settings->logo ?? '', 'assets') ? '' : 'assets/images/') . ($settings->logo ?? 'logo.png')) }}" alt="Logo" class="h-12 w-auto drop-shadow-md">
                         @endif
                         <h3 class="text-xl font-bold text-white">{{ $settings->nama_sekolah ?? 'SMK Idrisiyyah' }}</h3>
                     </div>
@@ -396,7 +460,7 @@
             @if(!empty($settings->popup_url))
             <a href="{{ $settings->popup_url }}" target="_blank">
             @endif
-                <img src="{{ asset('assets/images/' . $settings->popup_gambar) }}" alt="Pengumuman" class="w-full rounded-2xl shadow-2xl">
+                <img src="{{ asset((str_starts_with($settings->popup_gambar ?? '', 'assets') ? '' : 'assets/images/') . ($settings->popup_gambar ?? '')) }}" alt="Pengumuman" class="w-full rounded-2xl shadow-2xl">
             @if(!empty($settings->popup_url))
             </a>
             @endif

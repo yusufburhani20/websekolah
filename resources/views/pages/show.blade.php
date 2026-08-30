@@ -34,15 +34,15 @@
 
 <!-- Main Content Area -->
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 -mt-20 mb-20">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="{{ $page->template == 'wide' ? 'block max-w-6xl mx-auto' : 'grid grid-cols-1 lg:grid-cols-3 gap-8' }}">
         
         <!-- Left Column: Content -->
-        <div class="lg:col-span-2">
+        <div class="{{ $page->template == 'wide' ? 'w-full' : 'lg:col-span-2' }}">
             <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100">
                 
                 @if($page->gambar)
                 <div class="rounded-2xl overflow-hidden mb-10 border border-slate-100">
-                    <img src="{{ asset('assets/images/halaman/' . $page->gambar) }}" alt="{{ $page->judul }}" class="w-full h-auto object-cover max-h-[500px]" onerror="this.onerror=null;this.style.display='none';">
+                    <img src="{{ asset((str_starts_with($page->gambar, 'assets') ? '' : 'assets/images/halaman/') . $page->gambar) }}" alt="{{ $page->judul }}" class="w-full h-auto object-cover max-h-[500px]" onerror="this.onerror=null;this.style.display='none';">
                 </div>
                 @endif
                 
@@ -74,6 +74,7 @@
             </div>
         </div>
         
+        @if($page->template != 'wide')
         <!-- Right Column: Sidebar -->
         <div class="lg:col-span-1 space-y-8">
             
@@ -152,6 +153,7 @@
             </div>
 
         </div>
+        @endif
     </div>
 </div>
 @endsection

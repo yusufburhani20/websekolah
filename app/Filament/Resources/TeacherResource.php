@@ -51,7 +51,8 @@ class TeacherResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('foto')
                     ->image()
-                            ->imageResizeMode('cover')->imageResizeTargetWidth('1920')->imageResizeTargetHeight('1080')
+                    ->maxSize(2048)
+                            
                     ->directory('assets/images/staff')
                     ->disk('public_path')
                     ->required(),

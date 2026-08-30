@@ -95,3 +95,33 @@ Route::get('/sitemap.xml', function () {
     
     return response($xml, 200)->header('Content-Type', 'text/xml');
 });
+
+Route::get('/test-php-ini', function () { return ini_get('upload_max_filesize') . ' | ' . ini_get('post_max_size'); });
+
+Route::get('/test-upload', function () {
+    return '<form method="POST" enctype="multipart/form-data" action="/test-upload">
+        '.csrf_field().'
+        <input type="file" name="file">
+        <button type="submit">Upload Test</button>
+    </form>';
+});
+Route::post('/test-upload', function (Illuminate\Http\Request $request) {
+    \Illuminate\Support\Facades\Log::info('Test Upload:', ['php_limit' => ini_get('upload_max_filesize'), 'content_length' => $_SERVER['CONTENT_LENGTH'] ?? 0, 'files' => $_FILES]);
+    return response()->json([
+        'php_limit' => ini_get('upload_max_filesize'),
+        'content_length' => $_SERVER['CONTENT_LENGTH'] ?? 0,
+        'files_array' => $_FILES
+    ]);
+});
+
+use Illuminate\Http\Request;
+
+Route::post('/tinymce/upload', function (Request $request) {
+    if ($request->hasFile('file')) {
+        $file = $request->file('file');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('assets/images/tinymce'), $filename);
+        return response()->json(['location' => asset('assets/images/tinymce/' . $filename)]);
+    }
+    return response()->json(['error' => 'No file uploaded'], 400);
+})->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class])->name('tinymce.upload');

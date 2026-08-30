@@ -58,7 +58,8 @@ class GalleryResource extends Resource
                     ->schema([
                         Forms\Components\FileUpload::make('gambar')
                             ->image()
-                            ->imageResizeMode('cover')->imageResizeTargetWidth('1920')->imageResizeTargetHeight('1080')
+                    ->maxSize(2048)
+                            
                             ->multiple()
                             ->maxFiles(20)
                             ->directory('assets/images/gallery')

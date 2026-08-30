@@ -29,10 +29,10 @@ class MitraResource extends Resource
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('logo')
                     ->image()
-                            ->imageResizeMode('cover')->imageResizeTargetWidth('1920')->imageResizeTargetHeight('1080')
+                    ->maxSize(2048)
+                            
                     ->directory('assets/images/mitra')
-                    ->disk('public_path')
-                    ->maxLength(255),
+                    ->disk('public_path'),
                 Forms\Components\TextInput::make('link_web')
                     ->maxLength(255),
                 Forms\Components\Textarea::make('deskripsi')

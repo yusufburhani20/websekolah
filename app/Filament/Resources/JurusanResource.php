@@ -36,9 +36,10 @@ class JurusanResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('logo')
                     ->image()
-                    ->imageResizeMode('cover')
-                    ->imageResizeTargetWidth('1920')
-                    ->imageResizeTargetHeight('1080')
+                    ->maxSize(2048)
+                    
+                    
+                    
                     ->directory('assets/images/jurusan')
                     ->disk('public_path'),
                 Forms\Components\TextInput::make('urutan')
