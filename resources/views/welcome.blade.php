@@ -59,8 +59,21 @@
         <i class="fa-solid fa-bullhorn animate-pulse"></i> Info Sekolah
     </div>
     <div class="flex-1 overflow-hidden">
-        <marquee scrollamount="5" class="text-sm font-medium tracking-wide flex items-center">
+        <marquee scrollamount="5" class="text-sm font-medium tracking-wide flex items-center" onmouseover="this.stop();" onmouseout="this.start();">
             {!! str_replace(',', ' <span class="mx-4 text-brand-600">|</span> ', e($settings->info_sekolah_teks)) !!}
+            
+            @if(isset($latestPosts) && $latestPosts->count() > 0)
+                <span class="mx-6 text-brand-600">|</span>
+                <span class="text-white/70 mr-2">Kabar Terbaru:</span>
+                @foreach($latestPosts as $post)
+                    <a href="/berita/{{ $post->slug }}" class="hover:text-white hover:underline transition-colors" title="Baca selengkapnya">
+                        <i class="fa-regular fa-newspaper text-xs mx-1"></i> {{ $post->judul }}
+                    </a>
+                    @if(!$loop->last)
+                        <span class="mx-4 text-brand-600">|</span>
+                    @endif
+                @endforeach
+            @endif
         </marquee>
     </div>
 </div>
