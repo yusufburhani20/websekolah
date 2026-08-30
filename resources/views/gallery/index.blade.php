@@ -4,50 +4,28 @@
 
 @section('content')
 
-<!-- Page Header (Unsplash/Pinterest Style) -->
-<section class="bg-brand-950 py-24 md:py-32 relative overflow-hidden">
-    <!-- Animated Masonry Background -->
-    <div class="absolute inset-0 z-0 opacity-60 transform -rotate-[3deg] scale-125 md:scale-110 pointer-events-none transition-transform duration-1000">
-        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 p-4 absolute -inset-[20%]">
-            @php 
-                $items = $galleries->items();
-                if(empty($items)) {
-                    $bgImages = array_fill(0, 18, (object)['foto' => 'default.jpg']);
-                } else {
-                    $bgImages = $items;
-                    // Repeat items until we have at least 18 to fill the grid
-                    while(count($bgImages) < 18) {
-                        $bgImages = array_merge($bgImages, $items);
-                    }
-                    $bgImages = array_slice($bgImages, 0, 18);
-                }
-            @endphp
-            @foreach($bgImages as $i => $gallery)
-                @php
-                    $hClasses = ['h-32', 'h-48', 'h-64', 'h-40', 'h-56'];
-                    $height = $hClasses[$i % 5];
-                    $mtClasses = ['mt-0', 'mt-12', 'mt-4', 'mt-16', 'mt-8'];
-                    $mt = $mtClasses[$i % 5];
-                @endphp
-                <div class="rounded-2xl overflow-hidden shadow-2xl {{ $height }} {{ $mt }}">
-                    <img src="{{ asset((str_starts_with($gallery->foto ?? 'default.jpg', 'assets') ? '' : 'assets/images/gallery/') . ($gallery->foto ?? 'default.jpg')) }}" class="w-full h-full object-cover shadow-lg" alt="Bg" onerror="this.onerror=null;this.src='{{ asset('assets/images/default1.jpg') }}';">
-                </div>
-            @endforeach
+<!-- Page Header (Premium Modern) -->
+<section class="bg-brand-950 py-16 md:py-20 relative overflow-hidden">
+    <!-- Elegant Premium Background -->
+    <div class="absolute inset-0 z-0">
+        <!-- Abstract gradient blobs -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-30">
+            <div class="absolute -top-[20%] -left-[10%] w-[50%] h-[150%] rounded-full bg-gradient-to-r from-brand-800 to-amber-500 blur-[100px] transform rotate-12"></div>
+            <div class="absolute top-[20%] -right-[10%] w-[40%] h-[120%] rounded-full bg-gradient-to-l from-brand-600 to-transparent blur-[80px] transform -rotate-12"></div>
         </div>
+        <!-- Dot pattern overlay -->
+        <div class="absolute inset-0" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px; opacity: 0.05;"></div>
     </div>
-    
-    <!-- Cinematic Gradient Overlay -->
-    <div class="absolute inset-0 z-0 bg-gradient-to-b from-brand-950/40 via-brand-950/60 to-brand-950"></div>
     
     <!-- Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center justify-center">
-        <div class="inline-flex items-center gap-2 px-5 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-amber-400 text-xs font-bold uppercase tracking-widest mb-8 shadow-xl">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-brand-800/80 backdrop-blur-md border border-brand-700 rounded-full text-amber-400 text-xs font-bold uppercase tracking-widest mb-6 shadow-lg">
             <i class="fa-solid fa-camera-retro animate-pulse"></i> Album Dokumentasi
         </div>
-        <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 drop-shadow-xl tracking-tight">
-            Galeri <span class="text-amber-400" style="text-shadow: 0 4px 20px rgba(251, 191, 36, 0.4);">Kegiatan</span>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg tracking-tight">
+            Galeri <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">Kegiatan</span>
         </h1>
-        <p class="text-slate-300 max-w-3xl mx-auto text-lg md:text-xl font-light leading-relaxed">
+        <p class="text-brand-100 max-w-2xl mx-auto text-base md:text-lg font-medium leading-relaxed">
             Jelajahi momen-momen berharga, fasilitas unggulan, dan prestasi membanggakan yang terekam abadi di lingkungan sekolah kami.
         </p>
     </div>
