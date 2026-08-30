@@ -5,7 +5,7 @@ namespace App\Filament\Pages;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Process;
-use Illuminate\Support\HtmlString;
+use Illuminate\Contracts\View\View;
 
 class Dashboard extends \Filament\Pages\Dashboard
 {
@@ -16,56 +16,40 @@ class Dashboard extends \Filament\Pages\Dashboard
                 ->label('Tarik Update (Deploy)')
                 ->icon('heroicon-o-cloud-arrow-down')
                 ->color('success')
+                ->modalHeading('Monitor Deployment')
+                ->modalDescription('Proses penarikan kode dan optimasi akan berjalan di server. Jangan tutup jendela ini hingga proses selesai atau halaman dimuat ulang otomatis.')
+                ->modalContent(fn (): View => view('filament.pages.deploy-modal'))
+                ->modalSubmitActionLabel('Jalankan Deployment Sekarang')
                 ->requiresConfirmation()
-                ->modalHeading('Tarik Update dari GitHub?')
-                ->modalDescription('Tindakan ini akan menjalankan script deploy.sh di server untuk mengunduh kode terbaru dari GitHub. Pastikan tidak ada orang yang sedang mengedit sistem saat ini.')
-                ->action(function () {
-                    // Path ke file deploy.sh di root folder project
+                ->action(function ($livewire) {
                     $path = base_path('deploy.sh');
                     
                     if (!file_exists($path)) {
-                        Notification::make()
-                            ->title('Gagal: File deploy.sh tidak ditemukan!')
-                            ->danger()
-                            ->send();
+                        Notification::make()->title('File deploy.sh tidak ditemukan!')->danger()->send();
                         return;
                     }
                     
+                    $livewire->stream('deployLog', "Mempersiapkan server...\n", replace: true);
+                    
                     try {
-                        // Jalankan menggunakan Process facade Laravel
-                        $result = Process::timeout(120)->run("bash " . escapeshellarg($path));
-                        
-                        $logOutput = e($result->output());
-                        if (empty($logOutput)) {
-                            $logOutput = e($result->errorOutput());
-                        }
-
-                        $formattedLog = new HtmlString('<div style="margin-top: 10px; max-height: 250px; overflow-y: auto; background: #0f172a; color: #10b981; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 0.75rem; text-align: left; white-space: pre-wrap;">' . $logOutput . '</div>');
+                        $result = Process::timeout(300)->run("bash " . escapeshellarg($path), function (string $type, string $output) use ($livewire) {
+                            // Mengirim output baris demi baris secara realtime ke modal
+                            $livewire->stream('deployLog', e($output));
+                        });
                         
                         if ($result->successful()) {
-                            Notification::make()
-                                ->title('Deployment Berhasil!')
-                                ->body($formattedLog)
-                                ->success()
-                                ->persistent()
-                                ->send();
-                                
+                            Notification::make()->title('Deployment Selesai & Sukses!')->success()->send();
+                            
+                            // Beri jeda 1 detik agar pesan sukses terbaca sebelum refresh
+                            sleep(1);
+                            
                             // Deep refresh halaman
                             return redirect(request()->header('Referer') ?? '/admin');
                         } else {
-                            Notification::make()
-                                ->title('Deployment Gagal!')
-                                ->body($formattedLog)
-                                ->danger()
-                                ->persistent()
-                                ->send();
+                            Notification::make()->title('Deployment Gagal atau Terdapat Error!')->danger()->persistent()->send();
                         }
                     } catch (\Exception $e) {
-                        Notification::make()
-                            ->title('Error Eksekusi Server')
-                            ->body($e->getMessage())
-                            ->danger()
-                            ->send();
+                        Notification::make()->title('Error Eksekusi')->body($e->getMessage())->danger()->send();
                     }
                 }),
         ];
