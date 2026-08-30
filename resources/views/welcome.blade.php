@@ -67,7 +67,7 @@
 @endif
 
 <!-- Berita Terbaru -->
-<section class="pt-12 pb-20 bg-slate-50 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto rounded-b-[3rem] shadow-sm mb-12">
+<section class="pt-12 pb-8 bg-slate-50 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto rounded-b-[3rem] shadow-sm mb-0">
     <div class="flex justify-between items-end mb-8">
         <div>
             <h2 class="text-3xl md:text-4xl font-extrabold text-brand-950 mb-2">Kabar Terbaru</h2>
@@ -110,7 +110,7 @@
 </section>
 
 <!-- Program Keahlian (Jurusan) -->
-<section id="program" class="py-16 bg-slate-50 relative overflow-hidden">
+<section id="program" class="pt-8 pb-16 bg-slate-50 relative overflow-hidden">
     <div class="absolute top-0 right-0 w-96 h-96 bg-brand-200 rounded-full mix-blend-multiply opacity-20 -translate-y-1/2 translate-x-1/3"></div>
     <div class="absolute bottom-0 left-0 w-64 h-64 bg-amber-200 rounded-full mix-blend-multiply opacity-20 translate-y-1/3 -translate-x-1/4"></div>
     
