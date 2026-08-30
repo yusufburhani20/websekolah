@@ -4,16 +4,47 @@
 
 @section('content')
 
-<!-- Page Header -->
-<section class="bg-brand-950 py-20 relative overflow-hidden">
-    <div class="absolute inset-0" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 30px 30px; opacity: 0.05;"></div>
-    
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-brand-800 rounded-full text-amber-400 text-xs font-bold uppercase tracking-wider mb-6">
-            <i class="fa-solid fa-camera-retro"></i> Dokumentasi
+<!-- Page Header (Unsplash/Pinterest Style) -->
+<section class="bg-brand-950 py-24 md:py-32 relative overflow-hidden">
+    <!-- Animated Masonry Background -->
+    <div class="absolute inset-0 z-0 opacity-20 transform -rotate-[5deg] scale-125 md:scale-110 pointer-events-none transition-transform duration-1000">
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 p-4 absolute -inset-[20%]">
+            @php 
+                // Mengambil 18 gambar pertama (jika ada) untuk background
+                 = array_slice(->items(), 0, 18); 
+                // Jika galeri kosong, beri placeholder dummy array
+                if(empty()) {
+                     = array_fill(0, 18, (object)['foto' => 'default.jpg']);
+                }
+            @endphp
+            @foreach( as  => )
+                @php
+                     = ['h-32', 'h-48', 'h-64', 'h-40', 'h-56'];
+                     = [ % 5];
+                     = ['mt-0', 'mt-12', 'mt-4', 'mt-16', 'mt-8'];
+                     = [ % 5];
+                @endphp
+                <div class="rounded-2xl overflow-hidden shadow-2xl {{  }} {{  }}">
+                    <img src="{{ asset((str_starts_with(->foto ?? 'default.jpg', 'assets') ? '' : 'assets/images/gallery/') . (->foto ?? 'default.jpg')) }}" class="w-full h-full object-cover filter grayscale" alt="Bg" onerror="this.onerror=null;this.src='{{ asset('assets/images/default1.jpg') }}';">
+                </div>
+            @endforeach
         </div>
-        <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-6">Galeri <span class="text-amber-400">Kegiatan</span></h1>
-        <p class="text-brand-200 max-w-2xl mx-auto text-lg">Jelajahi momen-momen berharga, fasilitas unggulan, dan prestasi membanggakan yang terekam di lingkungan sekolah kami.</p>
+    </div>
+    
+    <!-- Cinematic Gradient Overlay -->
+    <div class="absolute inset-0 z-0 bg-gradient-to-b from-brand-950/80 via-brand-950/90 to-brand-950"></div>
+    
+    <!-- Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center justify-center">
+        <div class="inline-flex items-center gap-2 px-5 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-amber-400 text-xs font-bold uppercase tracking-widest mb-8 shadow-xl">
+            <i class="fa-solid fa-camera-retro animate-pulse"></i> Album Dokumentasi
+        </div>
+        <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 drop-shadow-xl tracking-tight">
+            Galeri <span class="text-amber-400" style="text-shadow: 0 4px 20px rgba(251, 191, 36, 0.4);">Kegiatan</span>
+        </h1>
+        <p class="text-slate-300 max-w-3xl mx-auto text-lg md:text-xl font-light leading-relaxed">
+            Jelajahi momen-momen berharga, fasilitas unggulan, dan prestasi membanggakan yang terekam abadi di lingkungan sekolah kami.
+        </p>
     </div>
 </section>
 
