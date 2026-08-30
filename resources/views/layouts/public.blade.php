@@ -493,5 +493,46 @@
             window.scrollTo({ top: 0, behavior: "smooth" });
         });
     </script>
+    <!-- Floating Contact Widget -->
+    <div x-data="{ open: false }" class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 font-sans">
+        <!-- Menu Items -->
+        <div x-show="open" 
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 translate-y-4 scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+             x-transition:leave-end="opacity-0 translate-y-4 scale-95"
+             class="flex flex-col items-end gap-3"
+             style="display: none;">
+             
+             @if(!empty($settings->whatsapp))
+             @php 
+                $wa_url = str_starts_with($settings->whatsapp, 'http') ? $settings->whatsapp : 'https://wa.me/' . preg_replace('/[^0-9]/', '', (substr($settings->whatsapp, 0, 1) == '0' ? '62' . substr($settings->whatsapp, 1) : $settings->whatsapp));
+             @endphp
+             <a href="{{ $wa_url }}" target="_blank" class="flex items-center gap-3 bg-[#25D366] text-white px-4 py-2 rounded-full shadow-lg hover:bg-[#128C7E] transition-colors transform hover:-translate-y-1">
+                 <span class="font-bold text-sm tracking-wide">WhatsApp</span>
+                 <div class="bg-white/20 p-2 rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-brands fa-whatsapp text-lg"></i></div>
+             </a>
+             @endif
+             
+             @if(!empty($settings->telegram))
+             @php 
+                $tg_url = str_starts_with($settings->telegram, 'http') ? $settings->telegram : 'https://t.me/' . str_replace('@', '', $settings->telegram);
+             @endphp
+             <a href="{{ $tg_url }}" target="_blank" class="flex items-center gap-3 bg-[#0088cc] text-white px-4 py-2 rounded-full shadow-lg hover:bg-[#0077b5] transition-colors transform hover:-translate-y-1">
+                 <span class="font-bold text-sm tracking-wide">Telegram</span>
+                 <div class="bg-white/20 p-2 rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-brands fa-telegram text-lg"></i></div>
+             </a>
+             @endif
+        </div>
+
+        <!-- Main Button -->
+        <button @click="open = !open" class="bg-amber-500 hover:bg-amber-400 text-white w-14 h-14 rounded-full shadow-xl shadow-amber-500/30 flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+            <i class="fa-solid fa-headset text-2xl transition-transform duration-300" :class="{'rotate-90 scale-0': open, 'rotate-0 scale-100': !open}"></i>
+            <i class="fa-solid fa-xmark text-2xl absolute transition-transform duration-300" :class="{'rotate-0 scale-100': open, '-rotate-90 scale-0': !open}"></i>
+        </button>
+    </div>
+
 </body>
 </html>
