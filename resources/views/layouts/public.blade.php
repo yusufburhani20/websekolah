@@ -473,7 +473,7 @@
     @stack('scripts')
 
     <!-- Back to Top Button -->
-    <button id="backToTop" class="fixed bottom-8 right-8 bg-brand-600 text-white w-12 h-12 rounded-full shadow-[0_4px_14px_0_rgba(0,118,255,0.39)] hover:shadow-[0_6px_20px_rgba(0,118,255,0.23)] flex items-center justify-center opacity-0 invisible transition-all duration-500 hover:bg-brand-500 hover:-translate-y-1.5 z-50 cursor-pointer">
+    <button id="backToTop" class="fixed bottom-6 left-6 bg-brand-600 text-white w-12 h-12 rounded-full shadow-[0_4px_14px_0_rgba(0,118,255,0.39)] hover:shadow-[0_6px_20px_rgba(0,118,255,0.23)] flex items-center justify-center opacity-0 invisible transition-all duration-500 hover:bg-brand-500 hover:-translate-y-1.5 z-50 cursor-pointer">
         <i class="fa-solid fa-arrow-up"></i>
     </button>
 
