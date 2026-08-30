@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\JurusanResource\Pages;
-use App\Filament\Resources\JurusanResource\RelationManagers;
-use App\Models\Jurusan;
+use App\Filament\Resources\MitraResource\Pages;
+use App\Filament\Resources\MitraResource\RelationManagers;
+use App\Models\Mitra;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,34 +13,30 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class JurusanResource extends Resource
+class MitraResource extends Resource
 {
-    protected static ?string $model = Jurusan::class;
+    protected static ?string $model = Mitra::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
+    protected static ?string $navigationGroup = 'Data Sekolah';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nama_jurusan')
+                Forms\Components\TextInput::make('nama_perusahaan')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('singkatan')
-                    ->required()
-                    ->maxLength(20),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
+                Forms\Components\FileUpload::make('logo')
+                    ->image()
+                            ->imageResizeMode('cover')->imageResizeTargetWidth('1920')->imageResizeTargetHeight('1080')
+                    ->directory('assets/images/mitra')
+                    ->disk('public_path')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('link_web')
                     ->maxLength(255),
                 Forms\Components\Textarea::make('deskripsi')
                     ->columnSpanFull(),
-                Forms\Components\FileUpload::make('logo')
-                    ->image()
-                    ->imageResizeMode('cover')
-                    ->imageResizeTargetWidth('1920')
-                    ->imageResizeTargetHeight('1080')
-                    ->directory('assets/images/jurusan')
-                    ->disk('public_path'),
                 Forms\Components\TextInput::make('urutan')
                     ->required()
                     ->numeric()
@@ -54,14 +50,11 @@ class JurusanResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nama_jurusan')
+                Tables\Columns\TextColumn::make('nama_perusahaan')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('singkatan')
+                Tables\Columns\ImageColumn::make('logo')->disk('public_path')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
-                    ->searchable(),
-                Tables\Columns\ImageColumn::make('logo')
-                    ->disk('public_path')
+                Tables\Columns\TextColumn::make('link_web')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('urutan')
                     ->numeric()
@@ -100,9 +93,9 @@ class JurusanResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListJurusans::route('/'),
-            'create' => Pages\CreateJurusan::route('/create'),
-            'edit' => Pages\EditJurusan::route('/{record}/edit'),
+            'index' => Pages\ListMitras::route('/'),
+            'create' => Pages\CreateMitra::route('/create'),
+            'edit' => Pages\EditMitra::route('/{record}/edit'),
         ];
     }
 }

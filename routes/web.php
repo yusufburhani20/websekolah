@@ -24,6 +24,7 @@ Route::get('/dokumen', [DocumentController::class, 'index']);
 
 
 Route::get('/guru', [TeacherController::class, 'index']);
+Route::get('/galeri', [\App\Http\Controllers\GalleryController::class, 'index']);
 
 
 Route::get('/halaman/{slug}', [PageController::class, 'show']);
@@ -49,6 +50,8 @@ View::composer('*', function ($view) {
 use App\Models\Post;
 use App\Models\HomeProgram;
 use App\Models\StudentChart;
+use App\Models\Jurusan;
+use App\Models\Mitra;
 
 Route::get('/', function () {
     $heroSlides = HeroSlide::where('aktif', 'ya')->orderBy('urutan')->get();
@@ -56,8 +59,10 @@ Route::get('/', function () {
     $homePrograms = HomeProgram::orderBy('urutan')->get();
     $studentCharts = StudentChart::orderBy('urutan')->get();
     $latestPosts = Post::where('status', 'published')->orderBy('tanggal_posting', 'desc')->take(3)->get();
+    $jurusans = Jurusan::where('aktif', 1)->orderBy('urutan')->get();
+    $mitras = Mitra::where('aktif', 1)->orderBy('urutan')->get();
     
-    return view('welcome', compact('heroSlides', 'homeFeatures', 'homePrograms', 'studentCharts', 'latestPosts'));
+    return view('welcome', compact('heroSlides', 'homeFeatures', 'homePrograms', 'studentCharts', 'latestPosts', 'jurusans', 'mitras'));
 });
 
 Route::get('/sitemap.xml', function () {

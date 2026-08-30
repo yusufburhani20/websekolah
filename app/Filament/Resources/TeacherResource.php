@@ -28,7 +28,7 @@ class TeacherResource extends Resource
                 Forms\Components\TextInput::make('nama')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('nidn')
+                Forms\Components\TextInput::make('nidn')->label('NUPTK')
                     ->maxLength(50),
                 Forms\Components\TextInput::make('jabatan_fungsional')
                     ->maxLength(255),
@@ -44,8 +44,14 @@ class TeacherResource extends Resource
                     ->default('Guru'),
                 Forms\Components\Textarea::make('motto')
                     ->columnSpanFull(),
+                Forms\Components\TextInput::make('link_web')
+                    ->label('Link Web Administrasi Guru')
+                    ->url()
+                    ->maxLength(255)
+                    ->columnSpanFull(),
                 Forms\Components\FileUpload::make('foto')
                     ->image()
+                            ->imageResizeMode('cover')->imageResizeTargetWidth('1920')->imageResizeTargetHeight('1080')
                     ->directory('assets/images/staff')
                     ->disk('public_path')
                     ->required(),

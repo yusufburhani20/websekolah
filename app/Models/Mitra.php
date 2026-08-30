@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Jurusan extends Model
+class Mitra extends Model
 {
     protected $guarded = [];
+
+    //
 }

@@ -90,6 +90,7 @@ class PageResource extends Resource
                             ->live(),
                         Forms\Components\FileUpload::make('gambar')
                             ->image()
+                            ->imageResizeMode('cover')->imageResizeTargetWidth('1920')->imageResizeTargetHeight('1080')
                             ->directory('assets/images/pages')
                             ->disk('public_path')
                             ->helperText('Gambar utama (opsional) untuk halaman ini.'),

@@ -32,6 +32,7 @@ class MediaLibraryResource extends Resource
                         ->directory('assets/images/library')
                         ->disk('public_path')
                         ->image()
+                            ->imageResizeMode('cover')->imageResizeTargetWidth('1920')->imageResizeTargetHeight('1080')
                         ->required(),
                 ]),
             ]);
