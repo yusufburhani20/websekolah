@@ -24,9 +24,10 @@ class HeroSlideResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('gambar')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\FileUpload::make('gambar')
+                    ->directory('assets/images/hero')
+                    ->image()
+                    ->required(),
                 Forms\Components\TextInput::make('judul')
                     ->maxLength(255),
                 Forms\Components\Textarea::make('subjudul')
@@ -35,8 +36,9 @@ class HeroSlideResource extends Resource
                     ->required()
                     ->numeric()
                     ->default(0),
-                Forms\Components\TextInput::make('aktif')
-                    ->required(),
+                Forms\Components\Toggle::make('aktif')
+                    ->required()
+                    ->default(true),
             ]);
     }
 
@@ -44,14 +46,23 @@ class HeroSlideResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('gambar')
-                    ->searchable(),
+                Tables\Columns\ImageColumn::make('gambar')
+                    ->getStateUsing(function ($record) {
+                        $gambar = $record->gambar ?: 'default1.jpg';
+                        if (str_starts_with($gambar, 'assets/')) {
+                            return asset($gambar);
+                        }
+                        return asset('assets/images/hero/' . $gambar);
+                    })
+                    ->height(60)
+                    ->width(100)
+                    ->extraImgAttributes(['class' => 'object-cover rounded']),
                 Tables\Columns\TextColumn::make('judul')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('urutan')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('aktif'),
+                Tables\Columns\ToggleColumn::make('aktif'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
