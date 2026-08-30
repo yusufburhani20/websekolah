@@ -534,5 +534,76 @@
         </button>
     </div>
 
+    <!-- Global PDF Viewer Modal -->
+    <div x-data="{ open: false, url: '' }"
+         @open-pdf-modal.window="url = $event.detail; open = true; document.body.style.overflow = 'hidden'"
+         x-show="open"
+         style="display: none;"
+         class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 md:p-6"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0">
+        
+        <div @click.outside="open = false; document.body.style.overflow = ''" 
+             class="bg-white rounded-2xl shadow-2xl w-full max-w-6xl h-[85vh] md:h-[90vh] flex flex-col overflow-hidden transform transition-all relative"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-8 scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+             x-transition:leave-end="opacity-0 translate-y-8 scale-95">
+             
+            <!-- Modal Header -->
+            <div class="px-5 py-3 border-b border-gray-100 flex justify-between items-center bg-gray-50/90 backdrop-blur shrink-0">
+                <h3 class="text-base md:text-lg font-bold text-gray-800 flex items-center gap-2 truncate pr-4">
+                    <i class="fa-regular fa-file-pdf text-red-500 text-xl"></i> 
+                    <span class="truncate">Preview Dokumen</span>
+                </h3>
+                <div class="flex items-center gap-2 shrink-0">
+                    <a :href="url" target="_blank" download class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 transition-colors" title="Download File">
+                        <i class="fa-solid fa-download"></i>
+                    </a>
+                    <a :href="url" target="_blank" class="px-3 py-1.5 md:px-4 md:py-2 bg-brand-50 text-brand-700 hover:bg-brand-100 rounded-lg text-xs md:text-sm font-semibold transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> <span class="hidden sm:inline">Buka Penuh</span>
+                    </a>
+                    <button @click="open = false; document.body.style.overflow = ''" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-red-50 text-gray-500 hover:text-red-600 transition-colors">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Modal Body (PDF Viewer) -->
+            <div class="flex-1 bg-[#525659] relative w-full h-full overflow-hidden">
+                <!-- Loading indicator -->
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-white/50 z-0 pointer-events-none">
+                    <i class="fa-solid fa-circle-notch fa-spin text-4xl mb-3"></i>
+                    <p class="text-sm font-medium">Memuat Dokumen...</p>
+                </div>
+                
+                <template x-if="open">
+                    <iframe :src="url" class="w-full h-full border-0 absolute inset-0 z-10 bg-transparent" title="PDF Preview"></iframe>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script to Intercept PDF Links -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Find all links that end with .pdf or contain .pdf in their path (case insensitive)
+            document.querySelectorAll('a[href]').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href.split('?')[0].toLowerCase().endsWith('.pdf')) {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        window.dispatchEvent(new CustomEvent('open-pdf-modal', { detail: href }));
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
