@@ -10,22 +10,20 @@
     <div class="absolute inset-0 z-0 opacity-20 transform -rotate-[5deg] scale-125 md:scale-110 pointer-events-none transition-transform duration-1000">
         <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 p-4 absolute -inset-[20%]">
             @php 
-                // Mengambil 18 gambar pertama (jika ada) untuk background
-                 = array_slice(->items(), 0, 18); 
-                // Jika galeri kosong, beri placeholder dummy array
-                if(empty()) {
-                     = array_fill(0, 18, (object)['foto' => 'default.jpg']);
+                $bgImages = array_slice($galleries->items(), 0, 18); 
+                if(empty($bgImages)) {
+                    $bgImages = array_fill(0, 18, (object)['foto' => 'default.jpg']);
                 }
             @endphp
-            @foreach( as  => )
+            @foreach($bgImages as $i => $gallery)
                 @php
-                     = ['h-32', 'h-48', 'h-64', 'h-40', 'h-56'];
-                     = [ % 5];
-                     = ['mt-0', 'mt-12', 'mt-4', 'mt-16', 'mt-8'];
-                     = [ % 5];
+                    $hClasses = ['h-32', 'h-48', 'h-64', 'h-40', 'h-56'];
+                    $height = $hClasses[$i % 5];
+                    $mtClasses = ['mt-0', 'mt-12', 'mt-4', 'mt-16', 'mt-8'];
+                    $mt = $mtClasses[$i % 5];
                 @endphp
-                <div class="rounded-2xl overflow-hidden shadow-2xl {{  }} {{  }}">
-                    <img src="{{ asset((str_starts_with(->foto ?? 'default.jpg', 'assets') ? '' : 'assets/images/gallery/') . (->foto ?? 'default.jpg')) }}" class="w-full h-full object-cover filter grayscale" alt="Bg" onerror="this.onerror=null;this.src='{{ asset('assets/images/default1.jpg') }}';">
+                <div class="rounded-2xl overflow-hidden shadow-2xl {{ $height }} {{ $mt }}">
+                    <img src="{{ asset((str_starts_with($gallery->foto ?? 'default.jpg', 'assets') ? '' : 'assets/images/gallery/') . ($gallery->foto ?? 'default.jpg')) }}" class="w-full h-full object-cover filter grayscale" alt="Bg" onerror="this.onerror=null;this.src='{{ asset('assets/images/default1.jpg') }}';">
                 </div>
             @endforeach
         </div>
@@ -47,7 +45,6 @@
         </p>
     </div>
 </section>
-
 <!-- Filter Kategori -->
 <section class="bg-white border-b border-slate-100 sticky top-20 z-40 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
