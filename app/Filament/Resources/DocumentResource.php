@@ -27,16 +27,14 @@ class DocumentResource extends Resource
                     Forms\Components\TextInput::make('judul')
                         ->required()
                         ->maxLength(255),
-                    Forms\Components\Select::make('kategori')
-                        ->options([
-                            'RPS' => 'RPS',
-                            'SPMI' => 'SPMI',
-                            'Pedoman' => 'Pedoman',
-                            'Akreditasi' => 'Akreditasi',
-                            'Lainnya' => 'Lainnya',
-                        ])
+                    Forms\Components\TextInput::make('kategori')
+                        ->datalist(function () {
+                            $existing = \App\Models\Document::whereNotNull('kategori')->distinct()->pluck('kategori')->toArray();
+                            $defaults = ['RPS', 'SPMI', 'Pedoman', 'Akreditasi', 'Lainnya'];
+                            return array_values(array_unique(array_merge($defaults, $existing)));
+                        })
                         ->required()
-                        ->searchable(),
+                        ->placeholder('Pilih atau ketik manual kategori baru...'),
                     Forms\Components\FileUpload::make('file_path')
                         ->label('File PDF/Doc')
                         ->directory('assets/documents')
