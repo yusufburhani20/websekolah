@@ -16,11 +16,11 @@ class TracerStudyController extends Controller
         
         $allStatuses = TracerStudy::pluck('status');
         
-        $statusCounts = collect(['Bekerja' => 0, 'Kuliah' => 0, 'Wirausaha' => 0, 'Mencari Kerja' => 0]);
+        $statusCounts = ['Bekerja' => 0, 'Kuliah' => 0, 'Wirausaha' => 0, 'Mencari Kerja' => 0];
         foreach ($allStatuses as $statusArray) {
             if (is_array($statusArray)) {
                 foreach ($statusArray as $s) {
-                    if ($statusCounts->has($s)) {
+                    if (isset($statusCounts[$s])) {
                         $statusCounts[$s]++;
                     }
                 }

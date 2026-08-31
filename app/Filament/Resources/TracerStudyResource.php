@@ -52,11 +52,13 @@ class TracerStudyResource extends Resource
 
                 Forms\Components\Section::make('Data Akademik & Pekerjaan')
                     ->schema([
-                        Forms\Components\TextInput::make('tahun_masuk')
-                            ->numeric()
+                        Forms\Components\Select::make('tahun_masuk')
+                            ->options(array_combine(range(date('Y'), date('Y') - 30), range(date('Y'), date('Y') - 30)))
+                            ->searchable()
                             ->required(),
-                        Forms\Components\TextInput::make('tahun_keluar')
-                            ->numeric()
+                        Forms\Components\Select::make('tahun_keluar')
+                            ->options(array_combine(range(date('Y') + 5, date('Y') - 30), range(date('Y') + 5, date('Y') - 30)))
+                            ->searchable()
                             ->required(),
                         Forms\Components\CheckboxList::make('status')
                             ->options([
