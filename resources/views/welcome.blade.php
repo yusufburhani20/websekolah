@@ -5,7 +5,7 @@
 @section('content')
 
 <!-- Hero Section -->
-<section class="relative w-full h-[calc(100vh-100px)] lg:h-[calc(100vh-114px)] min-h-[500px] overflow-hidden group">
+<section class="relative w-full h-[calc(100dvh-97px)] min-h-[500px] overflow-hidden group">
     <div class="swiper w-full h-full" id="hero-swiper">
         <div class="swiper-wrapper">
             @forelse($heroSlides as $slide)
