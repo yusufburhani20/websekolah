@@ -3,18 +3,18 @@
 @section('title', 'Bursa Kerja Khusus (BKK) - ' . ($settings->nama_sekolah ?? 'SMK'))
 
 @section('content')
-<div class="pt-32 pb-20 bg-slate-50 relative overflow-hidden">
+<div class="pt-24 pb-12 bg-slate-50 relative overflow-hidden">
     <div class="absolute top-0 right-0 w-96 h-96 bg-brand-100 rounded-full blur-3xl -mr-48 -mt-48 opacity-60"></div>
     <div class="absolute bottom-0 left-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl -ml-48 -mb-48 opacity-60"></div>
 
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <!-- Hero Section -->
-        <div class="text-center mb-16 animate-fade-in-up">
-            <span class="bg-brand-100 text-brand-700 px-4 py-1.5 rounded-full text-sm font-bold tracking-wide uppercase mb-4 inline-block shadow-sm">Bursa Kerja Khusus (BKK)</span>
-            <h1 class="text-4xl lg:text-5xl font-extrabold text-slate-800 mb-6 leading-tight">
+        <div class="text-center mb-10 animate-fade-in-up">
+            <span class="bg-brand-100 text-brand-700 px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase mb-3 inline-block shadow-sm">Bursa Kerja Khusus (BKK)</span>
+            <h1 class="text-3xl lg:text-4xl font-extrabold text-slate-800 mb-4 leading-tight">
                 Temukan <span class="text-brand-600">Karir Impianmu</span><br>Bersama Mitra Kami
             </h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed mb-8">
+            <p class="text-base text-slate-600 max-w-2xl mx-auto leading-relaxed mb-6">
                 Platform karir eksklusif untuk menjembatani lulusan dengan dunia industri. Temukan ribuan peluang kerja yang sesuai dengan passion dan keahlianmu.
             </p>
 
