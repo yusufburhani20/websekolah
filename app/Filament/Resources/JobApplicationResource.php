@@ -78,6 +78,13 @@ class JobApplicationResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('file_cv')
+                    ->label('File CV')
+                    ->formatStateUsing(fn ($state) => $state ? 'Download CV' : 'Tidak ada')
+                    ->url(fn ($record) => $record->file_cv ? asset('storage/' . $record->file_cv) : null)
+                    ->openUrlInNewTab()
+                    ->color('primary')
+                    ->icon('heroicon-o-arrow-down-tray'),
                 Tables\Columns\TextColumn::make('status_lamaran')
                     ->badge()
                     ->colors([
@@ -95,6 +102,7 @@ class JobApplicationResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
