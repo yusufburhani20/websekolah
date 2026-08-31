@@ -15,6 +15,7 @@ use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\TracerStudyController;
 use App\Http\Controllers\BkkController;
+use App\Http\Controllers\JobApplicationController;
 
 Route::get('/jurusan/{slug}', [JurusanController::class, 'show']);
 
@@ -31,7 +32,9 @@ Route::get('/galeri', [\App\Http\Controllers\GalleryController::class, 'index'])
 
 // BKK Routes
 Route::get('/bkk', [BkkController::class, 'index']);
-Route::get('/bkk/{id}', [BkkController::class, 'show']);
+Route::get('/bkk/{id}', [BkkController::class, 'show'])->name('bkk.show');
+Route::get('/bkk/{id}/apply', [JobApplicationController::class, 'create'])->name('bkk.apply');
+Route::post('/bkk/{id}/apply', [JobApplicationController::class, 'store'])->name('bkk.store_application');
 
 Route::get('/tracer-study', [\App\Http\Controllers\TracerStudyController::class, 'index']);
 Route::get('/tracer-study/isi', [\App\Http\Controllers\TracerStudyController::class, 'create']);

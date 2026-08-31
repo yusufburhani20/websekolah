@@ -5,6 +5,16 @@
 @section('content')
 <div class="pt-32 pb-20 bg-slate-50 relative">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        @if(session('success'))
+            <div class="mb-8 bg-emerald-500 text-white p-6 rounded-2xl text-center shadow-lg animate-fade-in-up">
+                <div class="w-16 h-16 bg-white text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fa-solid fa-check text-3xl font-bold"></i>
+                </div>
+                <h4 class="font-bold text-xl mb-2">Pendaftaran Berhasil!</h4>
+                <p class="text-emerald-50">{{ session('success') }}</p>
+            </div>
+        @endif
+
         <!-- Breadcrumb -->
         <nav class="flex mb-8 text-sm font-medium text-slate-500">
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -118,7 +128,9 @@
                         <p class="text-brand-100 text-sm mb-6">Segera kirimkan lamaran dan CV terbaikmu sebelum batas waktu berakhir.</p>
                         
                         <!-- Panggil komponen livewire untuk form lamaran -->
-                        @livewire('job-application-form', ['vacancyId' => $vacancy->id])
+                        <a href="{{ route('bkk.apply', $vacancy->id) }}" class="w-full bg-white text-brand-600 hover:bg-brand-50 font-bold py-3.5 px-6 rounded-xl transition-all shadow-md group flex items-center justify-center">
+                            <i class="fa-solid fa-paper-plane mr-2 group-hover:animate-bounce"></i> Lamar Pekerjaan Ini
+                        </a>
                     </div>
 
                     <!-- Profil Perusahaan -->
