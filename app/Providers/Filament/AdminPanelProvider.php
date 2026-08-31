@@ -32,6 +32,18 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->favicon(function () {
+                try {
+                    if (\Illuminate\Support\Facades\Schema::hasTable('site_settings')) {
+                        $settings = \App\Models\SiteSetting::first();
+                        if ($settings && $settings->favicon) {
+                            $path = str_starts_with($settings->favicon, 'assets') ? $settings->favicon : 'assets/images/' . $settings->favicon;
+                            return asset($path);
+                        }
+                    }
+                } catch (\Exception $e) {}
+                return asset('favicon.ico');
+            })
             ->login(\App\Filament\Pages\Auth\Login::class)
             ->userMenuItems([
                 MenuItem::make()
