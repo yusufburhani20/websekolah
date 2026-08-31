@@ -125,19 +125,19 @@
 <body class="font-sans antialiased text-gray-800 bg-slate-50 flex flex-col min-h-screen">
 
     <!-- Top Bar (Header Pengumuman) -->
-    <div class="bg-brand-950 text-white/80 py-0 text-xs border-b border-brand-800 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-stretch min-h-[38px]">
+    <div class="bg-brand-950 text-white/80 py-0 text-[11px] sm:text-xs border-b border-brand-800 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-stretch min-h-[32px]">
 
             <!-- Kiri: Kontak & Akreditasi -->
             <div class="flex items-center divide-x divide-white/10 overflow-hidden">
                 @if(!empty($settings->email))
-                <a href="mailto:{{ $settings->email }}" class="hidden lg:flex items-center gap-2 px-4 h-full hover:bg-white/5 hover:text-white transition-colors duration-200 py-2.5 whitespace-nowrap">
+                <a href="mailto:{{ $settings->email }}" class="hidden lg:flex items-center gap-1.5 px-3 h-full hover:bg-white/5 hover:text-white transition-colors duration-200 py-1.5 whitespace-nowrap">
                     <i class="fa-regular fa-envelope text-brand-400"></i>
                     <span>{{ $settings->email }}</span>
                 </a>
                 @endif
                 @if(!empty($settings->telepon))
-                <a href="tel:{{ $settings->telepon }}" class="hidden md:flex items-center gap-2 px-4 hover:bg-white/5 hover:text-white transition-colors duration-200 py-2.5 whitespace-nowrap">
+                <a href="tel:{{ $settings->telepon }}" class="hidden md:flex items-center gap-1.5 px-3 hover:bg-white/5 hover:text-white transition-colors duration-200 py-1.5 whitespace-nowrap">
                     <i class="fa-solid fa-phone text-brand-400"></i>
                     <span>{{ $settings->telepon }}</span>
                 </a>
@@ -145,10 +145,10 @@
                 @if($settings->header_akreditasi_aktif ?? false)
                 <a href="{{ $settings->header_akreditasi_url ?: '#' }}" 
                    target="_blank"
-                   class="hidden sm:flex items-center px-3 lg:px-4 hover:bg-white/5 transition-colors duration-200 py-2 group whitespace-nowrap">
-                    <div class="flex items-center gap-1.5 bg-amber-400 text-brand-950 px-3 py-1 rounded-full shadow-[0_0_10px_rgba(245,158,11,0.2)] group-hover:shadow-[0_0_15px_rgba(245,158,11,0.5)] transition-all">
-                        <i class="fa-solid fa-award text-[10px]"></i>
-                        <span class="font-extrabold text-[10px] lg:text-xs uppercase tracking-wide">Akreditasi {{ $settings->header_akreditasi_teks }}</span>
+                   class="hidden sm:flex items-center px-3 hover:bg-white/5 transition-colors duration-200 py-1.5 group whitespace-nowrap">
+                    <div class="flex items-center gap-1.5 bg-amber-400 text-brand-950 px-2.5 py-0.5 rounded-full shadow-[0_0_10px_rgba(245,158,11,0.2)] group-hover:shadow-[0_0_15px_rgba(245,158,11,0.5)] transition-all">
+                        <i class="fa-solid fa-award text-[9px]"></i>
+                        <span class="font-extrabold text-[9px] lg:text-[10px] uppercase tracking-wide">Akreditasi {{ $settings->header_akreditasi_teks }}</span>
                     </div>
                 </a>
                 @endif
@@ -198,8 +198,8 @@
                 @if($settings->header_pendaftaran_aktif ?? false)
                 <a href="{{ $settings->header_pendaftaran_url }}"
                    @if($settings->header_pendaftaran_newtab ?? false) target="_blank" @endif
-                   class="flex items-center gap-2 px-5 bg-amber-500 hover:bg-amber-400 text-white font-semibold transition-colors duration-200 py-2.5 h-full whitespace-nowrap flex-shrink-0 text-sm">
-                    <i class="fa-solid fa-user-plus text-xs"></i>
+                   class="flex items-center gap-1.5 px-4 bg-amber-500 hover:bg-amber-400 text-white font-semibold transition-colors duration-200 py-1.5 h-full whitespace-nowrap flex-shrink-0 text-[11px] sm:text-xs">
+                    <i class="fa-solid fa-user-plus text-[10px]"></i>
                     <span class="hidden xs:inline">{{ $settings->header_pendaftaran_teks ?: 'Daftar Sekarang' }}</span>
                     <span class="inline xs:hidden">Daftar</span>
                 </a>
@@ -211,37 +211,37 @@
     <!-- Navigation -->
     <nav class="glass-nav sticky top-0 z-50 w-full transition-all duration-300 shadow-sm" x-data="{ mobileOpen: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20">
+            <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <a href="/" class="flex items-center gap-3 group">
+                    <a href="/" class="flex items-center gap-2 sm:gap-3 group">
                         @if(!empty($settings->logo))
-                        <img src="{{ asset((str_starts_with($settings->logo ?? '', 'assets') ? '' : 'assets/images/') . ($settings->logo ?? 'logo.png')) }}" alt="Logo" class="h-12 w-auto transform transition duration-500 group-hover:scale-105" onerror="this.onerror=null;this.style.display='none'">
+                        <img src="{{ asset((str_starts_with($settings->logo ?? '', 'assets') ? '' : 'assets/images/') . ($settings->logo ?? 'logo.png')) }}" alt="Logo" class="h-9 w-auto transform transition duration-500 group-hover:scale-105" onerror="this.onerror=null;this.style.display='none'">
                         @else
-                        <div class="h-12 w-12 bg-brand-600 text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-lg">
+                        <div class="h-9 w-9 bg-brand-600 text-white rounded-lg flex items-center justify-center font-bold text-lg shadow-lg">
                             {{ substr($settings->nama_sekolah ?? 'S', 0, 1) }}
                         </div>
                         @endif
-                        <span class="font-bold text-xl md:text-2xl tracking-tight text-brand-900 group-hover:text-brand-600 transition-colors">
+                        <span class="font-bold text-lg md:text-xl tracking-tight text-brand-900 group-hover:text-brand-600 transition-colors">
                             {{ $settings->nama_sekolah ?? 'SMK Idrisiyyah' }}
                         </span>
                     </a>
                 </div>
                 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex md:items-center md:space-x-8">
+                <div class="hidden lg:flex lg:items-center lg:space-x-6 xl:space-x-8">
                     @foreach($menus as $menu)
                         @if($menu->children->count() > 0)
                         <div class="relative group py-2">
-                            <button class="flex items-center gap-1 text-gray-600 hover:text-brand-600 font-medium transition-colors focus:outline-none">
+                            <button class="flex items-center gap-1 text-sm text-gray-600 hover:text-brand-600 font-semibold transition-colors focus:outline-none">
                                 {{ $menu->nama_menu }}
-                                <i class="fa-solid fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                                <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-300 group-hover:rotate-180"></i>
                             </button>
                             <span class="absolute -bottom-1 left-1/2 w-0 h-1 bg-amber-400 transition-all duration-300 group-hover:w-full group-hover:left-0 rounded-full"></span>
                             <!-- Dropdown -->
-                            <div class="absolute left-0 top-full mt-1 w-52 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top -translate-y-2 group-hover:translate-y-0 z-50">
-                                <div class="py-2">
+                            <div class="absolute left-0 top-full mt-0 w-48 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top -translate-y-2 group-hover:translate-y-0 z-50">
+                                <div class="py-1.5">
                                     @foreach($menu->children as $child)
-                                    <a href="{{ url($child->url) }}" target="{{ $child->target ?? '_self' }}" class="block px-4 py-2.5 text-sm text-gray-600 hover:text-brand-600 hover:bg-brand-50 transition-colors">
+                                    <a href="{{ url($child->url) }}" target="{{ $child->target ?? '_self' }}" class="block px-4 py-2 text-sm text-gray-600 font-medium hover:text-brand-600 hover:bg-brand-50 transition-colors">
                                         {{ $child->nama_menu }}
                                     </a>
                                     @endforeach
@@ -249,7 +249,7 @@
                             </div>
                         </div>
                         @else
-                        <a href="{{ url($menu->url) }}" target="{{ $menu->target ?? '_self' }}" class="text-gray-600 hover:text-brand-600 font-medium transition-colors relative group py-2">
+                        <a href="{{ url($menu->url) }}" target="{{ $menu->target ?? '_self' }}" class="text-sm text-gray-600 hover:text-brand-600 font-semibold transition-colors relative group py-2">
                             {{ $menu->nama_menu }}
                             <span class="absolute -bottom-1 left-1/2 w-0 h-1 bg-amber-400 transition-all duration-300 group-hover:w-full group-hover:left-0 rounded-full"></span>
                         </a>
@@ -258,8 +258,8 @@
                 </div>
 
                 <!-- Mobile Hamburger -->
-                <div class="flex md:hidden items-center">
-                    <button @click="mobileOpen = !mobileOpen" class="text-gray-600 hover:text-brand-600 p-2">
+                <div class="flex lg:hidden items-center">
+                    <button @click="mobileOpen = !mobileOpen" class="text-gray-600 hover:text-brand-600 p-2 focus:outline-none">
                         <i class="fa-solid fa-bars text-xl" x-show="!mobileOpen"></i>
                         <i class="fa-solid fa-xmark text-xl" x-show="mobileOpen" x-cloak></i>
                     </button>
@@ -268,7 +268,7 @@
         </div>
 
         <!-- Mobile Menu -->
-        <div x-show="mobileOpen" x-cloak class="md:hidden bg-white border-t border-gray-100 shadow-2xl max-h-[70vh] overflow-y-auto">
+        <div x-show="mobileOpen" x-cloak class="lg:hidden bg-white border-t border-gray-100 shadow-2xl max-h-[70vh] overflow-y-auto">
             <div class="px-4 py-2 flex flex-col">
                 @foreach($menus as $menu)
                     @if($menu->children->count() > 0)
