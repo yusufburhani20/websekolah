@@ -93,24 +93,11 @@
 
                         <!-- Upload CV -->
                         <div>
-                            <span class="block text-sm font-bold text-slate-700 mb-1">Upload CV (PDF Maks. 2MB) *</span>
-                            <label class="mt-1 flex justify-center rounded-xl border border-dashed border-slate-300 px-6 py-6 bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer">
-                                <div class="text-center">
-                                    <i class="fa-solid fa-file-pdf text-3xl text-red-400 mb-2"></i>
-                                    <div class="flex text-sm leading-6 text-slate-600 justify-center">
-                                        <span class="relative cursor-pointer rounded-md font-bold text-brand-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand-600 focus-within:ring-offset-2 hover:text-brand-500">
-                                            <span>Klik untuk memilih file</span>
-                                            <input type="file" wire:model.live="file_cv" class="sr-only" accept="application/pdf">
-                                        </span>
-                                    </div>
-                                    <p class="text-xs text-slate-500 mt-1" wire:loading.remove wire:target="file_cv">
-                                        {{ $file_cv ? $file_cv->getClientOriginalName() : 'Belum ada file yang dipilih' }}
-                                    </p>
-                                    <p class="text-xs text-brand-500 font-bold mt-1" wire:loading wire:target="file_cv">
-                                        Mengunggah... <i class="fa-solid fa-spinner fa-spin"></i>
-                                    </p>
-                                </div>
-                            </label>
+                            <label class="block text-sm font-bold text-slate-700 mb-1">Upload CV (PDF Maks. 2MB) *</label>
+                            <input type="file" wire:model="file_cv" accept=".pdf" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 cursor-pointer">
+                            <div wire:loading wire:target="file_cv" class="text-brand-600 text-xs font-bold mt-2">
+                                <i class="fa-solid fa-spinner fa-spin mr-1"></i> Sedang mengunggah...
+                            </div>
                             @error('file_cv') <span class="text-red-500 text-xs font-bold mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
