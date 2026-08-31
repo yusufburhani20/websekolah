@@ -124,11 +124,29 @@ class TracerStudyResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('pekerjaan')
                     ->label('Pekerjaan / Usaha')
-                    ->formatStateUsing(fn ($record) => $record->pekerjaan ?: $record->bidang_usaha ?: '-')
+                    ->formatStateUsing(function ($record) {
+                        $parts = [];
+                        if (in_array('Bekerja', $record->status ?? []) && $record->pekerjaan) {
+                            $parts[] = '💼 ' . $record->pekerjaan;
+                        }
+                        if (in_array('Wirausaha', $record->status ?? []) && $record->bidang_usaha) {
+                            $parts[] = '🏪 ' . $record->bidang_usaha;
+                        }
+                        return empty($parts) ? '-' : implode(' | ', $parts);
+                    })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('kampus')
                     ->label('Kampus / Perusahaan')
-                    ->formatStateUsing(fn ($record) => $record->kampus ?: $record->nama_perusahaan ?: '-')
+                    ->formatStateUsing(function ($record) {
+                        $parts = [];
+                        if (in_array('Bekerja', $record->status ?? []) && $record->nama_perusahaan) {
+                            $parts[] = '🏢 ' . $record->nama_perusahaan;
+                        }
+                        if (in_array('Kuliah', $record->status ?? []) && $record->kampus) {
+                            $parts[] = '🎓 ' . $record->kampus;
+                        }
+                        return empty($parts) ? '-' : implode(' | ', $parts);
+                    })
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')

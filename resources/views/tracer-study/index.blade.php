@@ -155,18 +155,22 @@
                                 </div>
                             </td>
                             <td class="py-4 px-6">
-                                @if(in_array('Bekerja', $alumni->status) || in_array('Wirausaha', $alumni->status))
-                                <div class="font-medium text-slate-700">{{ $alumni->pekerjaan ?: $alumni->bidang_usaha ?: '-' }}</div>
-                                <div class="text-xs text-slate-500 mt-1">{{ $alumni->nama_perusahaan ?: '-' }}</div>
+                                @if(in_array('Bekerja', $alumni->status))
+                                <div class="font-medium text-slate-700"><i class="fa-solid fa-briefcase text-slate-400 mr-1 text-[10px]"></i> {{ $alumni->pekerjaan ?: '-' }}</div>
+                                <div class="text-xs text-slate-500 mt-1 ml-4">{{ $alumni->nama_perusahaan ?: '-' }}</div>
+                                @endif
+                                
+                                @if(in_array('Wirausaha', $alumni->status))
+                                <div class="font-medium text-slate-700 {{ in_array('Bekerja', $alumni->status) ? 'mt-2 border-t border-slate-100 pt-2' : '' }}"><i class="fa-solid fa-store text-slate-400 mr-1 text-[10px]"></i> {{ $alumni->bidang_usaha ?: '-' }}</div>
                                 @endif
                                 
                                 @if(in_array('Kuliah', $alumni->status))
-                                <div class="font-medium text-slate-700 {{ in_array('Bekerja', $alumni->status) || in_array('Wirausaha', $alumni->status) ? 'mt-2 border-t border-slate-100 pt-2' : '' }}">{{ $alumni->jurusan_kuliah ?: '-' }}</div>
-                                <div class="text-xs text-slate-500 mt-1">{{ $alumni->kampus ?: '-' }}</div>
+                                <div class="font-medium text-slate-700 {{ in_array('Bekerja', $alumni->status) || in_array('Wirausaha', $alumni->status) ? 'mt-2 border-t border-slate-100 pt-2' : '' }}"><i class="fa-solid fa-graduation-cap text-slate-400 mr-1 text-[10px]"></i> {{ $alumni->jurusan_kuliah ?: '-' }}</div>
+                                <div class="text-xs text-slate-500 mt-1 ml-4">{{ $alumni->kampus ?: '-' }}</div>
                                 @endif
 
                                 @if(in_array('Mencari Kerja', $alumni->status))
-                                <span class="text-slate-400 italic">-</span>
+                                <span class="text-slate-400 italic {{ count($alumni->status) > 1 ? 'block mt-2 border-t border-slate-100 pt-2' : '' }}"><i class="fa-solid fa-magnifying-glass mr-1 text-[10px]"></i> Sedang mencari kerja</span>
                                 @endif
                             </td>
                         </tr>
