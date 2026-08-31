@@ -56,6 +56,7 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         }
     </style>
+    @livewireStyles
     @yield('head')
 
     <!-- Org Chart Styles -->
@@ -605,5 +606,6 @@
             });
         });
     </script>
+    @livewireScripts
 </body>
 </html>
