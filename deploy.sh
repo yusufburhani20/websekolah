@@ -15,12 +15,21 @@ echo "$LOG_PREFIX 🚀 Memulai proses deployment Website SMK FADRIS..."
 
 cd "$APP_DIR" || exit 1
 
-echo "$LOG_PREFIX 📥 Menarik kode terbaru dari GitHub..."
-git checkout -- . 2>/dev/null || true
-git clean -fd 2>/dev/null || true
+echo "$LOG_PREFIX 📥 Menyiapkan repository (Safe Directory)..."
+git config --global --add safe.directory "$APP_DIR" || true
 
-# Karena dieksekusi dari PHP, kita pakai git pull biasa (asumsi repo publik atau SSH sudah diset di user www/root)
-git pull origin main 2>&1
+echo "$LOG_PREFIX 📥 Menghapus perubahan lokal..."
+git reset --hard HEAD 2>&1
+git clean -fd 2>&1
+
+echo "$LOG_PREFIX 📥 Menarik kode terbaru dari GitHub..."
+PULL_RESULT=$(git pull origin main 2>&1)
+echo "$PULL_RESULT"
+
+if [[ $PULL_RESULT == *"error"* ]] || [[ $PULL_RESULT == *"fatal"* ]] || [[ $PULL_RESULT == *"conflict"* ]]; then
+    echo "$LOG_PREFIX ❌ GAGAL: Terjadi masalah saat menjalankan git pull. Mohon periksa error di atas."
+    exit 1
+fi
 
 # Path PHP 8.3 di aaPanel
 PHP_BIN="/www/server/php/83/bin/php"
