@@ -26,6 +26,9 @@ Route::get('/dokumen', [DocumentController::class, 'index']);
 Route::get('/guru', [TeacherController::class, 'index']);
 Route::get('/galeri', [\App\Http\Controllers\GalleryController::class, 'index']);
 
+Route::get('/tracer-study', [\App\Http\Controllers\TracerStudyController::class, 'index']);
+Route::get('/tracer-study/isi', [\App\Http\Controllers\TracerStudyController::class, 'create']);
+
 
 Route::get('/halaman/{slug}', [PageController::class, 'show']);
 

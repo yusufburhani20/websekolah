@@ -22,7 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        \Illuminate\Support\Facades\URL::forceScheme('https');
+        if (request()->getHost() !== '127.0.0.1' && request()->getHost() !== 'localhost') {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
 
         View::composer('*', function ($view) {
             if (!request()->is('admin*') && !request()->is('livewire*')) {
