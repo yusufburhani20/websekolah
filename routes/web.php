@@ -12,6 +12,9 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\JurusanController;
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\TracerStudyController;
+use App\Http\Controllers\BkkController;
 
 Route::get('/jurusan/{slug}', [JurusanController::class, 'show']);
 
@@ -25,6 +28,10 @@ Route::get('/dokumen', [DocumentController::class, 'index']);
 
 Route::get('/guru', [TeacherController::class, 'index']);
 Route::get('/galeri', [\App\Http\Controllers\GalleryController::class, 'index']);
+
+// BKK Routes
+Route::get('/bkk', [BkkController::class, 'index']);
+Route::get('/bkk/{id}', [BkkController::class, 'show']);
 
 Route::get('/tracer-study', [\App\Http\Controllers\TracerStudyController::class, 'index']);
 Route::get('/tracer-study/isi', [\App\Http\Controllers\TracerStudyController::class, 'create']);
