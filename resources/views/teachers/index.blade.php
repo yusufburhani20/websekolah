@@ -52,7 +52,7 @@
         <div class="bg-white rounded-2xl overflow-hidden shadow-xl shadow-slate-200/40 border border-slate-50 group hover:shadow-2xl hover:shadow-slate-200/60 transition-all duration-500 transform hover:-translate-y-2 flex flex-col">
             <!-- Foto Guru -->
             <div class="aspect-[3/4] bg-slate-100 relative overflow-hidden">
-                <img src="{{ asset((str_starts_with($teacher->foto, 'assets') ? '' : 'assets/images/staff/') . ($teacher->foto ?: 'default.jpg')) }}" alt="{{ $teacher->nama }}" class="w-full h-full object-cover object-top filter group-hover:brightness-110 transition-all duration-700" onerror="this.onerror=null;this.src='{{ asset('assets/images/default1.jpg') }}';">
+                <img src="{{ $teacher->foto_url }}" alt="{{ $teacher->nama }}" class="w-full h-full object-cover object-top filter group-hover:brightness-110 transition-all duration-700">
                 
                 <!-- Motto Overlay -->
                 <div class="absolute inset-0 bg-gradient-to-t from-brand-950 via-brand-950/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center p-3 text-center">
