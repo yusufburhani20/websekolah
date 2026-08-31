@@ -93,14 +93,14 @@
 
                         <!-- Upload CV -->
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-1">Upload CV (PDF Maks. 2MB) *</label>
-                            <div class="mt-1 flex justify-center rounded-xl border border-dashed border-slate-300 px-6 py-6 bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer" onclick="document.getElementById('file_cv_input').click()">
+                            <span class="block text-sm font-bold text-slate-700 mb-1">Upload CV (PDF Maks. 2MB) *</span>
+                            <label class="mt-1 flex justify-center rounded-xl border border-dashed border-slate-300 px-6 py-6 bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer">
                                 <div class="text-center">
                                     <i class="fa-solid fa-file-pdf text-3xl text-red-400 mb-2"></i>
                                     <div class="flex text-sm leading-6 text-slate-600 justify-center">
                                         <span class="relative cursor-pointer rounded-md font-bold text-brand-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-brand-600 focus-within:ring-offset-2 hover:text-brand-500">
                                             <span>Klik untuk memilih file</span>
-                                            <input id="file_cv_input" type="file" wire:model="file_cv" class="sr-only" accept=".pdf">
+                                            <input type="file" wire:model.live="file_cv" class="sr-only" accept="application/pdf">
                                         </span>
                                     </div>
                                     <p class="text-xs text-slate-500 mt-1" wire:loading.remove wire:target="file_cv">
@@ -110,7 +110,7 @@
                                         Mengunggah... <i class="fa-solid fa-spinner fa-spin"></i>
                                     </p>
                                 </div>
-                            </div>
+                            </label>
                             @error('file_cv') <span class="text-red-500 text-xs font-bold mt-1 block">{{ $message }}</span> @enderror
                         </div>
 
