@@ -77,7 +77,7 @@
             
             <div class="mt-auto pt-5 border-t border-slate-50 flex items-center justify-between">
                 <span class="text-xs text-slate-400 font-medium">Klik untuk {{ $isPdf ? 'membuka' : 'mengunduh' }}</span>
-                <a href="{{ asset('storage/' . $doc->file_path) }}" class="inline-flex items-center gap-2 bg-slate-100 hover:bg-brand-600 text-slate-700 hover:text-white px-5 py-2 rounded-xl text-sm font-bold transition-colors duration-300">
+                <a href="{{ asset(str_starts_with($doc->file_path, 'assets') ? $doc->file_path : 'storage/' . $doc->file_path) }}" class="inline-flex items-center gap-2 bg-slate-100 hover:bg-brand-600 text-slate-700 hover:text-white px-5 py-2 rounded-xl text-sm font-bold transition-colors duration-300">
                     <i class="fa-solid fa-cloud-arrow-down"></i> Akses File
                 </a>
             </div>
