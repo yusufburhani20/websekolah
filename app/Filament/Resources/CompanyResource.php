@@ -31,8 +31,7 @@ class CompanyResource extends Resource
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('logo')
                     ->image()
-                    ->directory('companies')
-                    ->maxLength(255),
+                    ->directory('companies'),
                 Forms\Components\Textarea::make('deskripsi')
                     ->maxLength(65535)
                     ->columnSpanFull(),
