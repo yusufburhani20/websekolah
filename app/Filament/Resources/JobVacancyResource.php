@@ -29,7 +29,18 @@ class JobVacancyResource extends Resource
                 Forms\Components\Select::make('company_id')
                     ->relationship('company', 'nama_perusahaan')
                     ->required()
-                    ->searchable(),
+                    ->searchable()
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('nama_perusahaan')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->email()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('no_telp')
+                            ->tel()
+                            ->maxLength(255),
+                    ]),
                 Forms\Components\TextInput::make('judul_lowongan')
                     ->required()
                     ->maxLength(255),
@@ -54,7 +65,6 @@ class JobVacancyResource extends Resource
                     ->default(true),
                 Forms\Components\Select::make('jurusan_terkait')
                     ->multiple()
-                    ->relationship('company', 'nama_perusahaan')
                     ->options(\App\Models\Jurusan::pluck('nama_jurusan', 'id'))
                     ->columnSpanFull(),
                 Forms\Components\RichEditor::make('deskripsi_pekerjaan')
