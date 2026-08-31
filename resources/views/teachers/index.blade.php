@@ -74,12 +74,12 @@
                 
                 <!-- Tombol Administrasi Web -->
                 @if($teacher->link_web)
-                <a href="{{ $teacher->link_web }}" target="_blank" class="block w-full bg-slate-50 hover:bg-brand-600 text-slate-600 hover:text-white border border-slate-100 hover:border-brand-600 font-bold text-xs py-3 px-4 rounded-xl transition-all duration-300 mt-2">
-                    <i class="fa-solid fa-link mr-1.5"></i> Link Administrasi
+                <a href="{{ $teacher->link_web }}" target="_blank" class="block w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs py-3 px-4 rounded-xl transition-all duration-300 mt-2">
+                    <i class="fa-solid fa-link mr-1.5"></i> Buka Perangkat Ajar
                 </a>
                 @else
-                <button disabled class="block w-full bg-slate-50 text-slate-400 border border-slate-100 font-bold text-xs py-3 px-4 rounded-xl mt-2 cursor-not-allowed" title="Link administrasi belum tersedia">
-                    <i class="fa-solid fa-link-slash mr-1.5"></i> Link Administrasi
+                <button disabled class="block w-full bg-orange-200 text-white font-bold text-xs py-3 px-4 rounded-xl mt-2 cursor-not-allowed" title="Perangkat ajar belum tersedia">
+                    <i class="fa-solid fa-link-slash mr-1.5"></i> Buka Perangkat Ajar
                 </button>
                 @endif
             </div>
