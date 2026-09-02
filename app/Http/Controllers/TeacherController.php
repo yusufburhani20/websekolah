@@ -17,7 +17,7 @@ class TeacherController extends Controller
             $query->where('kategori', 'like', '%' . $kategori . '%');
         }
         
-        $teachers = $query->orderBy('urutan', 'asc')->orderBy('created_at', 'asc')->paginate(12);
+        $teachers = $query->orderBy('urutan', 'asc')->orderBy('created_at', 'asc')->get();
         
         // Get all unique categories for dynamic buttons (optional) or just use 'Guru' and 'Staff' manually.
         // Let's pass the distinct categories just in case we want to use them.

@@ -88,6 +88,9 @@ class TeacherResource extends Resource
                         'Staff' => 'info',
                         default => 'gray',
                     }),
+                Tables\Columns\TextColumn::make('urutan')
+                    ->label('Urutan')
+                    ->sortable(),
                 Tables\Columns\IconColumn::make('aktif')
                     ->boolean(),
             ])

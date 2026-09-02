@@ -95,8 +95,6 @@
         @endforelse
     </div>
     
-    <div class="mt-16">
-        {{ $teachers->appends(['kategori' => $kategori])->links('pagination::tailwind') }}
-    </div>
+
 </div>
 @endsection
