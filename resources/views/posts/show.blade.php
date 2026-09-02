@@ -74,7 +74,7 @@
                         <div class="swiper-wrapper">
                             @foreach($fotos as $f)
                                 <div class="swiper-slide">
-                                    <img src="{{ asset((str_starts_with($f, 'assets') ? '' : 'assets/images/berita/') . ($f ?: 'default.jpg')) }}" alt="{{ $post->judul }}" class="w-full h-[400px] md:h-[500px] object-cover">
+                                    <img src="{{ asset((str_starts_with($f, 'assets') ? '' : 'assets/images/berita/') . ($f ?: 'default.jpg')) }}" alt="{{ $post->judul }}" class="w-full h-[400px] md:h-[500px] object-cover" loading="lazy">
                                 </div>
                             @endforeach
                         </div>
@@ -94,7 +94,7 @@
                     </script>
                 @elseif(count($fotos) == 1)
                     <div class="rounded-2xl overflow-hidden mb-10 shadow-md border border-slate-100">
-                        <img src="{{ asset((str_starts_with($post->thumbnail ?: ($fotos[0] ?? ''), 'assets') ? '' : 'assets/images/berita/') . ($post->thumbnail ?: ($fotos[0] ?? 'default.jpg'))) }}" alt="{{ $post->judul }}" class="w-full h-auto max-h-[500px] object-cover" onerror="this.onerror=null;this.src='{{ asset('assets/images/default1.jpg') }}';">
+                        <img src="{{ asset((str_starts_with($post->thumbnail ?: ($fotos[0] ?? ''), 'assets') ? '' : 'assets/images/berita/') . ($post->thumbnail ?: ($fotos[0] ?? 'default.jpg'))) }}" alt="{{ $post->judul }}" class="w-full h-auto max-h-[500px] object-cover" loading="lazy" onerror="this.onerror=null;this.src='{{ asset('assets/images/default1.jpg') }}';">
                     </div>
                 @endif
                 
@@ -135,7 +135,7 @@
                         @foreach($popular_posts as $pop)
                         <a href="/berita/{{ $pop->slug }}" class="flex gap-4 group items-center">
                             <div class="w-20 h-20 flex-shrink-0 rounded-2xl overflow-hidden shadow-sm">
-                                <img src="{{ asset((str_starts_with(is_array($pop->foto) ? ($pop->foto[0] ?? 'default.jpg') : ($pop->foto ?: 'default.jpg'), 'assets') ? '' : 'assets/images/berita/') . ($pop->thumbnail ?: (is_array($pop->foto) ? ($pop->foto[0] ?? 'default.jpg') : ($pop->foto ?: 'default.jpg')))) }}" alt="{{ $pop->judul }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.onerror=null;this.src='{{ asset('assets/images/default1.jpg') }}';">
+                                <img src="{{ asset((str_starts_with(is_array($pop->foto) ? ($pop->foto[0] ?? 'default.jpg') : ($pop->foto ?: 'default.jpg'), 'assets') ? '' : 'assets/images/berita/') . ($pop->thumbnail ?: (is_array($pop->foto) ? ($pop->foto[0] ?? 'default.jpg') : ($pop->foto ?: 'default.jpg')))) }}" alt="{{ $pop->judul }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" onerror="this.onerror=null;this.src='{{ asset('assets/images/default1.jpg') }}';">
                             </div>
                             <div class="flex-1">
                                 <h4 class="text-sm font-bold text-slate-800 line-clamp-2 group-hover:text-brand-600 leading-snug mb-1.5 transition-colors">{{ $pop->judul }}</h4>
@@ -170,4 +170,31 @@
         
     </div>
 </div>
+
+@php
+    $schemaImage = count($fotos) > 0 ? asset((str_starts_with($post->thumbnail ?: ($fotos[0] ?? ''), 'assets') ? '' : 'assets/images/berita/') . ($post->thumbnail ?: ($fotos[0] ?? 'default.jpg'))) : asset('assets/images/logo.png');
+@endphp
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ $post->judul }}",
+  "image": "{{ $schemaImage }}",
+  "datePublished": "{{ \Carbon\Carbon::parse($post->tanggal_posting)->toIso8601String() }}",
+  "dateModified": "{{ $post->updated_at->toIso8601String() }}",
+  "author": {
+    "@type": "Person",
+    "name": "Tim Redaksi"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ $settings->nama_sekolah ?? 'SMK Idrisiyyah' }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ asset((str_starts_with($settings->logo ?? '', 'assets') ? '' : 'assets/images/') . ($settings->logo ?? 'logo.png')) }}"
+    }
+  },
+  "description": "{{ Str::limit(strip_tags($post->isi), 150) }}"
+}
+</script>
 @endsection

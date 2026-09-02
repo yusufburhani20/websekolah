@@ -8,6 +8,7 @@
     <meta property="og:description" content="@yield('meta_description', 'Website Resmi ' . ($settings->nama_sekolah ?? 'SMK Idrisiyyah'))">
     <meta property="og:image" content="@yield('meta_image', asset((str_starts_with($settings->logo ?? '', 'assets') ? '' : 'assets/images/') . ($settings->logo ?? 'logo.png')))">
     <meta property="og:url" content="{{ url()->current() }}">
+    <link rel="canonical" href="{{ url()->current() }}">
     <meta name="twitter:card" content="summary_large_image">
     <title>@yield('title', $settings->nama_sekolah ?? 'SMK Idrisiyyah')</title>
     @if(!empty($settings->favicon))
